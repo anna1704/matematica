@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scomposizione Numerica (Scelta Multipla)</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #28a745;
+            --error-color: #dc3545;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #343a34;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative; /* Base per il posizionamento degli animali */
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 40px;
+            background-color: var(--card-background);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            z-index: 1; 
+        }
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+        #numero-da-scomporre {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0 40px 0;
+            color: var(--text-color);
+            border: 2px solid var(--primary-color);
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option-button {
+            padding: 15px 10px;
+            font-size: 1.1em;
+            text-align: center;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            background-color: var(--card-background);
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
+        .option-button:hover {
+            background-color: #e9ecef;
+            transform: translateY(-1px);
+        }
+
+        .option-button.selected {
+            border-color: #ffc107;
+            box-shadow: 0 0 8px rgba(255, 193, 7, 0.5);
+        }
+
+        .option-button.correct {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        .option-button.incorrect {
+            background-color: var(--error-color);
+            color: white;
+            border-color: var(--error-color);
+        }
+
+        button#btn-check, button#btn-nuovo {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+        button#btn-check {
+            background-color: var(--primary-color);
+        }
+        button#btn-check:hover {
+            background-color: #0056b3;
+        }
+        button#btn-nuovo {
+            background-color: #6c757d;
+        }
+        button#btn-nuovo:hover {
+            background-color: #5a6268;
+        }
+        
+        #feedback {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: none;
+        }
+        .correct-feedback {
+            background-color: #d4edda;
+            color: var(--secondary-color);
+        }
+        .incorrect-feedback {
+            background-color: #f8d7da;
+            color: var(--error-color);
+        }
+        .score-board {
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        /* STILI PER L'IMMAGINE COMBINATA */
+        .animal-image {
+            position: absolute; 
+            bottom: 20px;       
+            left: 20px;         
+            width: 200px;       /* Spazio per cane e gatto affiancati */
+            height: auto;       
+            opacity: 0.7;       
+            z-index: 0;         
+        }
+
+        /* Media queries per schermi più piccoli */
+        @media (max-width: 768px) {
+            .options-grid {
+                grid-template-columns: 1fr; 
+            }
+            .animal-image {
+                width: 150px; 
+                bottom: 10px;
+                left: 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            #numero-da-scomporre {
+                font-size: 2.2em;
+            }
+            .option-button {
+                font-size: 1em;
+                padding: 10px;
+            }
+            .animal-image {
+                display: none; /* Nascondi su schermi molto piccoli */
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Scegli la Scomposizione Corretta</h1>
+    
+    <div id="numero-da-scomporre">---</div>
+
+    <div class="options-grid" id="options-container">
+        </div>
+    
+    <button id="btn-check" onclick="controllaScomposizione()">Controlla Selezione</button>
+    <button id="btn-nuovo" onclick="generaNuovoEsercizio()">Nuovo Esercizio</button>
+
+    <div id="feedback"></div>
+    
+    <div class="score-board">
+        Punti Corretti: <span id="score-value">0</span>
+    </div>
+
+</div>
+
+<img src="animali.png" alt="Cane e Gatto affiancati" class="animal-image combined-animals">
+
+
+<script>
+    let numeroCorrente = 0;
+    let scomposizioneCorretta = '';
+    let selezioneUtente = null;
+    let score = 0;
+    const OPTIONS_CONTAINER = document.getElementById('options-container');
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    /**
+     * Genera la scomposizione corretta e 3 opzioni sbagliate.
+     */
+    function generateOptions(num) {
+        const numStr = String(num).padStart(3, '0');
+        const C = parseInt(numStr[0]);
+        const D = parseInt(numStr[1]);
+        const U = parseInt(numStr[2]);
+        
+        // 1. Scomposizione Corretta
+        const C_val = C * 100;
+        const D_val = D * 10;
+        const U_val = U;
+        const correct = `${C_val} + ${D_val} + ${U_val}`;
+        scomposizioneCorretta = correct; 
+
+        // 2. Generazione delle Opzioni Sbagliate (Errori comuni)
+        let wrongOptions = new Set();
+        
+        // Errore 1: Centinaia e Decine unite (es. 128 -> 120 + 8)
+        wrongOptions.add(`${C * 100 + D * 10} + ${U_val}`); 
+        
+        // Errore 2: Decine e Unità unite (es. 128 -> 100 + 28)
+        wrongOptions.add(`${C_val} + ${D * 10 + U_val}`); 
+        
+        // Errore 3: Sbagliare un centinaio (es. 128 -> 200 + 20 + 8)
+        let C_wrong_val = (C_val > 0) ? (C_val + 100) : 100;
+        wrongOptions.add(`${C_wrong_val} + ${D_val} + ${U_val}`);
+
+        // Rimuovi la scomposizione corretta se per caso si è generata
+        wrongOptions.delete(correct);
+
+        // Assicurati di avere almeno 3 opzioni sbagliate uniche
+        while (wrongOptions.size < 3) {
+            let randC = getRandomInt(0, 9) * 100;
+            let randD = getRandomInt(0, 9) * 10;
+            let randU = getRandomInt(0, 9);
+            let tempWrong = `${randC} + ${randD} + ${randU}`;
+            // Aggiunge solo se l'opzione è diversa dalla corretta e non è già nel set
+            if (tempWrong !== correct) {
+                wrongOptions.add(tempWrong);
+            }
+        }
+        
+        // Prende solo le prime 3 opzioni sbagliate
+        let finalWrong = Array.from(wrongOptions).slice(0, 3);
+        
+        // 3. Mescola l'array finale (1 corretta + 3 sbagliate)
+        let options = [correct, ...finalWrong];
+        
+        // Algoritmo di Fisher-Yates per mescolare
+        for (let i = options.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [options[i], options[j]] = [options[j], options[i]];
+        }
+        
+        return options;
+    }
+
+    /**
+     * Visualizza i pulsanti delle opzioni.
+     */
+    function renderOptions(options) {
+        OPTIONS_CONTAINER.innerHTML = '';
+        selezioneUtente = null; 
+
+        options.forEach(option => {
+            const button = document.createElement('div');
+            button.classList.add('option-button');
+            button.textContent = option;
+            button.setAttribute('data-value', option);
+            
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.option-button').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+                button.classList.add('selected');
+                selezioneUtente = option;
+            });
+
+            OPTIONS_CONTAINER.appendChild(button);
+        });
+    }
+
+    /**
+     * Genera un nuovo esercizio completo.
+     */
+    function generaNuovoEsercizio() {
+        numeroCorrente = getRandomInt(100, 999);
+        document.getElementById('numero-da-scomporre').innerText = numeroCorrente;
+
+        const options = generateOptions(numeroCorrente);
+        renderOptions(options);
+
+        const feedbackDiv = document.getElementById('feedback');
+        feedbackDiv.style.display = 'none';
+        feedbackDiv.className = '';
+        
+        // Pulisce classi e riabilita i clic
+        document.querySelectorAll('.option-button').forEach(btn => {
+            btn.classList.remove('selected', 'correct', 'incorrect');
+            btn.style.pointerEvents = 'auto'; 
+        });
+    }
+
+    /**
+     * Controlla la selezione dell'utente.
+     */
+    function controllaScomposizione() {
+        const feedbackDiv = document.getElementById('feedback');
+
+        if (!selezioneUtente) {
+            feedbackDiv.style.display = 'block';
+            feedbackDiv.className = 'incorrect-feedback';
+            feedbackDiv.innerHTML = '⚠️ **Attenzione!** Devi selezionare una delle opzioni.';
+            return;
+        }
+
+        const isCorretto = (selezioneUtente === scomposizioneCorretta);
+        
+        feedbackDiv.style.display = 'block';
+
+        if (isCorretto) {
+            feedbackDiv.className = 'correct-feedback';
+            feedbackDiv.innerHTML = '✅ **Corretto!** La scomposizione è esatta.';
+            score++;
+        } else {
+            feedbackDiv.className = 'incorrect-feedback';
+            feedbackDiv.innerHTML = `❌ **Errato.** La scomposizione corretta era: **${scomposizioneCorretta}**`;
+        }
+        
+        // Evidenzia i pulsanti e blocca ulteriori selezioni
+        document.querySelectorAll('.option-button').forEach(btn => {
+            btn.classList.remove('selected');
+            if (btn.getAttribute('data-value') === scomposizioneCorretta) {
+                btn.classList.add('correct');
+            } else if (btn.getAttribute('data-value') === selezioneUtente && !isCorretto) {
+                btn.classList.add('incorrect');
+            }
+            btn.style.pointerEvents = 'none';
+        });
+
+        document.getElementById('score-value').innerText = score;
+    }
+
+    // Genera il primo esercizio all'apertura della pagina
+    window.onload = generaNuovoEsercizio;
+</script>
+
+</body>
+</html>
