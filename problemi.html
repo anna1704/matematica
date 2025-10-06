@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizi Matematici Interattivi Avanzati</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50; /* Verde brillante */
+            --secondary-color: #FF9800; /* Arancione */
+            --background-color: #e8f5e9; /* Sfondo molto chiaro */
+            --card-background: #ffffff;
+            --text-color: #333;
+            --grid-line-color: #ccc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: var(--card-background);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        .score-board {
+            text-align: right;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: var(--secondary-color);
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-size: 1.1em;
+        }
+        input[type="text"], button {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #388E3C; 
+        }
+        #btn-check {
+            background-color: var(--secondary-color);
+        }
+        #btn-check:hover {
+            background-color: #e68a00;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            text-align: center;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* STILI PER LA GRIGLIA CALCOLO IN COLONNA */
+        #calcolo-grid-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--card-background);
+            border: 2px solid #aaa;
+            border-radius: 4px;
+            padding: 15px 5px;
+            overflow-x: auto;
+        }
+        .grid-colonna {
+            display: grid;
+            /* 5 colonne: Spazio Operatore, Centinaia, Decine, Unità, Migliaia/Riporto */
+            grid-template-columns: 0.5fr repeat(4, 1fr); 
+            gap: 1px;
+            border: 1px solid #eee;
+        }
+        .grid-cell {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--grid-line-color);
+            font-size: 1.4em;
+            font-weight: bold;
+            text-align: center;
+            color: var(--text-color);
+            cursor: text;
+        }
+        .input-cell {
+            padding: 0;
+            margin: 0;
+            border: none;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 1.4em;
+            font-weight: bold;
+            box-sizing: border-box;
+            background-color: transparent;
+            outline: none;
+            caret-color: var(--primary-color);
+        }
+        .uguale-separatore {
+            grid-column: 1 / span 5;
+            border-bottom: 3px double var(--primary-color);
+            height: 5px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .operatore-cell {
+            color: var(--secondary-color);
+            font-size: 1.8em;
+        }
+        .riporto-row {
+            height: 35px; /* Riga leggermente più piccola per il riporto */
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Allenamento Matematico (Max 999)</h1>
+
+    <div class="score-board">
+        Punti: <span id="score-value">0</span>
+    </div>
+
+    <section>
+        <label>Problema</label>
+        <p id="testo-problema">Clicca su "Genera Nuovo Problema" per iniziare.</p>
+        <button onclick="generaProblema()">Genera Nuovo Problema</button>
+    </section>
+
+    <section>
+        <label for="dati-input">Dati Numerici (Estrai i numeri dal testo)</label>
+        <input type="text" id="dati-input" placeholder="Inserisci qui i due numeri (es: 545, 123)">
+    </section>
+
+    <section>
+        <label>Calcolo in Colonna (Griglia Interattiva)</label>
+        <div id="calcolo-grid-container">
+            </div>
+        <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+            *Trasferisci i dati del problema nella griglia. Usa le frecce o Tab per muoverti.*
+        </p>
+    </section>
+
+    <section>
+        <label for="risposta-input">Risposta (Solo il numero del risultato finale)</label>
+        <input type="text" id="risposta-input" placeholder="Inserisci qui il risultato">
+        <button id="btn-check" onclick="controllaRisposta()">Controlla Risposta</button>
+        <div id="feedback" class="feedback" style="display: none;"></div>
+    </section>
+
+    <input type="hidden" id="risultato-corretto">
+</div>
+
+<script>
+    let operazioneCorrente = '';
+    let numero1 = 0;
+    let numero2 = 0;
+    let risultatoCorretto = 0;
+    let score = 0;
+    const MAX_CIFRE = 4; // Max 4 cifre per la risposta (es. 999+800 = 1799)
+
+    // Array dei testi per la variazione
+    const testoAddizione = [
+        "Andrea ha collezionato [NUM1] figurine. La sua amica Giulia gli regala altre [NUM2] figurine. Quante figurine ha in totale Andrea?",
+        "In un parcheggio ci sono [NUM1] auto rosse e [NUM2] auto blu. Quante auto ci sono in tutto nel parcheggio?",
+        "Marta compra [NUM1] mele e [NUM2] banane. Quanti pezzi di frutta ha comprato in totale?"
+    ];
+
+    const testoSottrazione = [
+        "Un contadino ha raccolto [NUM1] mele. Ne vende [NUM2] al mercato. Quante mele gli restano?",
+        "Un aereo trasportava [NUM1] passeggeri. [NUM2] di loro sono scesi alla prima fermata. Quanti passeggeri restano sull'aereo?",
+        "Paolo aveva [NUM1] euro. Ha speso [NUM2] euro per un fumetto. Quanti soldi gli sono rimasti?"
+    ];
+
+    const testoMoltiplicazione = [
+        "Un mazzo di fiori ha [NUM1] rose. Se compro [NUM2] mazzi, quante rose ho in totale?",
+        "Ogni scatola contiene [NUM1] matite colorate. Se abbiamo [NUM2] scatole, quante matite ci sono in totale?",
+        "La maestra chiede agli studenti di disegnare [NUM1] pesciolini ciascuno. Se ci sono [NUM2] studenti, quanti pesciolini verranno disegnati in totale?"
+    ];
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function scegliTesto(array, n1, n2) {
+        const testoOriginale = array[getRandomInt(0, array.length - 1)];
+        return testoOriginale
+            .replace("[NUM1]", n1)
+            .replace("[NUM2]", n2);
+    }
+
+    function generaProblema() {
+        // 1. Pulisci e resetta
+        document.getElementById('risposta-input').value = '';
+        document.getElementById('feedback').style.display = 'none';
+        
+        // Pulisci il campo Dati e rendilo modificabile
+        const datiInput = document.getElementById('dati-input');
+        datiInput.value = '';
+        datiInput.removeAttribute('readonly'); 
+        datiInput.placeholder = 'Inserisci qui i due numeri (es: 545, 123)';
+
+        // 2. Determina l'operazione e i numeri
+        const tipoOp = getRandomInt(1, 3); 
+        let testo;
+        let operatore = '';
+
+        if (tipoOp === 1) { // Addizione
+            operazioneCorrente = 'addizione';
+            numero1 = getRandomInt(100, 999);
+            numero2 = getRandomInt(10, 800);
+            risultatoCorretto = numero1 + numero2;
+            testo = scegliTesto(testoAddizione, numero1, numero2);
+            operatore = '+';
+        } else if (tipoOp === 2) { // Sottrazione
+            operazioneCorrente = 'sottrazione';
+            numero1 = getRandomInt(100, 999);
+            numero2 = getRandomInt(10, 500);
+            if (numero2 > numero1) { [numero1, numero2] = [numero2, numero1]; }
+            risultatoCorretto = numero1 - numero2;
+            testo = scegliTesto(testoSottrazione, numero1, numero2);
+            operatore = '-';
+        } else { // Moltiplicazione
+            operazioneCorrente = 'moltiplicazione';
+            numero1 = getRandomInt(10, 99); 
+            numero2 = getRandomInt(2, 9);    
+            risultatoCorretto = numero1 * numero2;
+            if (risultatoCorretto > 999) { 
+                generaProblema();
+                return; 
+            }
+            testo = scegliTesto(testoMoltiplicazione, numero1, numero2);
+            operatore = 'x';
+        }
+
+        // 3. Aggiorna l'HTML
+        document.getElementById('testo-problema').innerText = testo;
+        document.getElementById('risultato-corretto').value = risultatoCorretto;
+        
+        // 4. Genera la griglia INTERAMENTE VUOTA
+        generaGrigliaCalcoloVuota(operatore);
+    }
+
+    function generaGrigliaCalcoloVuota(operatore) {
+        const gridContainer = document.getElementById('calcolo-grid-container');
+        gridContainer.innerHTML = ''; 
+        
+        let html = '<div class="grid-colonna">';
+
+        // Riga 1: RI PORTI (caselle cliccabili) - **RIPRISTINATA**
+        // Colonna Spazio
+        html += '<div class="grid-cell riporto-row"></div>'; 
+        // Colonne Cifre Riporti
+        for (let i = 0; i < MAX_CIFRE - 1; i++) { 
+            html += `<div class="grid-cell riporto-row"><input type="text" class="input-cell" maxlength="1" pattern="[0-9]" title="Inserisci solo un numero"></div>`;
+        }
+
+        // Riga 2: PRIMO NUMERO (caselle cliccabili)
+        // Colonna Spazio
+        html += '<div class="grid-cell"></div>'; 
+        // Colonne Cifre
+        for (let i = 0; i < MAX_CIFRE; i++) {
+            html += `<div class="grid-cell"><input type="text" class="input-cell" maxlength="1" pattern="[0-9]" title="Inserisci solo un numero"></div>`;
+        }
+
+        // Riga 3: SECONDO NUMERO (caselle cliccabili con operatore)
+        // Colonna Operatore
+        html += `<div class="grid-cell operatore-cell">${operatore}</div>`;
+        // Colonne Cifre
+        for (let i = 0; i < MAX_CIFRE; i++) {
+            html += `<div class="grid-cell"><input type="text" class="input-cell" maxlength="1" pattern="[0-9]" title="Inserisci solo un numero"></div>`;
+        }
+        
+        // Riga 4: SEGNO DI UGUALE (Simula la doppia linea orizzontale del segno =)
+        html += '<div class="uguale-separatore"></div>';
+
+        // Riga 5: RISULTATO (caselle cliccabili)
+        // Colonna Spazio
+        html += '<div class="grid-cell"></div>'; 
+        // Colonne Cifre Risultato
+        for (let i = 0; i < MAX_CIFRE; i++) {
+             html += `<div class="grid-cell"><input type="text" class="input-cell" maxlength="1" pattern="[0-9]" title="Inserisci solo un numero"></div>`;
+        }
+
+        html += '</div>';
+        gridContainer.innerHTML = html;
+        
+        // Aggiunge la logica per il focus automatico dopo l'input
+        setupInputNavigation();
+    }
+
+    function setupInputNavigation() {
+        const inputs = document.querySelectorAll('#calcolo-grid-container .input-cell');
+        inputs.forEach((input, index) => {
+            // Filtra solo i numeri
+            input.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                // Passa automaticamente alla casella successiva dopo aver inserito una cifra
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            // Quando l'utente preme Backspace, si sposta indietro
+            input.addEventListener('keydown', (e) => {
+                 // Indice del primo input nella griglia (riga dei riporti)
+                 const firstInputIndex = 0; 
+                 
+                 // Se premi Backspace, la casella è vuota, e non sei nella prima casella
+                 if (e.key === 'Backspace' && e.target.value === '' && index > firstInputIndex) {
+                    inputs[index - 1].focus();
+                 } 
+                 // Gestione speciale: se sei nella prima casella di ogni riga di input, Backspace deve svuotare e non spostare
+                 else if (e.key === 'Backspace' && e.target.value === '' && index === firstInputIndex) {
+                    // Non fare nulla se siamo nel primo input assoluto
+                    return; 
+                 }
+            });
+        });
+    }
+
+    function controllaRisposta() {
+        const rispostaUtente = parseInt(document.getElementById('risposta-input').value.trim());
+        const risultatoAtteso = parseInt(document.getElementById('risultato-corretto').value);
+        const feedbackDiv = document.getElementById('feedback');
+        
+        feedbackDiv.style.display = 'block';
+
+        if (isNaN(rispostaUtente)) {
+            feedbackDiv.className = 'feedback incorrect';
+            feedbackDiv.innerText = '⚠️ Inserisci un numero valido come risposta.';
+            return;
+        }
+
+        if (rispostaUtente === risultatoAtteso) {
+            feedbackDiv.className = 'feedback correct';
+            feedbackDiv.innerText = '✅ RISPOSTA ESATTA! 🎉 Ottimo lavoro!';
+            score++;
+        } else {
+            feedbackDiv.className = 'feedback incorrect';
+            feedbackDiv.innerText = `❌ RISPOSTA ERRATA. Il risultato era ${risultatoAtteso}. Riprova o Genera un nuovo problema!`;
+        }
+
+        document.getElementById('score-value').innerText = score;
+    }
+
+    // Genera il primo problema all'apertura della pagina
+    window.onload = generaProblema;
+</script>
+
+</body>
+</html>
