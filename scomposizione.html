@@ -76,4 +76,177 @@
             border-radius: 5px;
             transition: border-color 0.3s;
         }
-        .
+        .scomposizione-input input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+
+        #btn-check {
+            background-color: var(--primary-color);
+        }
+        #btn-check:hover {
+            background-color: #0056b3;
+        }
+        #btn-nuovo {
+            background-color: #6c757d;
+        }
+        #btn-nuovo:hover {
+            background-color: #5a6268;
+        }
+        
+        #feedback {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: var(--secondary-color);
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: var(--error-color);
+        }
+        .score-board {
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Scomponi il Numero</h1>
+    
+    <div id="numero-da-scomporre">---</div> <div class="input-group">
+        <div class="scomposizione-input">
+            <label for="input-c">Centinaia (C)</label>
+            <input type="number" id="input-c" maxlength="1" min="0" max="9" pattern="[0-9]">
+        </div>
+        <div class="scomposizione-input">
+            <label for="input-d">Decine (D)</label>
+            <input type="number" id="input-d" maxlength="1" min="0" max="9" pattern="[0-9]">
+        </div>
+        <div class="scomposizione-input">
+            <label for="input-u">Unità (U)</label>
+            <input type="number" id="input-u" maxlength="1" min="0" max="9" pattern="[0-9]">
+        </div>
+    </div>
+    
+    <button id="btn-check" onclick="controllaScomposizione()">Controlla</button>
+    <button id="btn-nuovo" onclick="generaNuovoNumero()">Nuovo Numero</button>
+
+    <div id="feedback"></div>
+    
+    <div class="score-board">
+        Punti Corretti: <span id="score-value">0</span>
+    </div>
+
+</div>
+
+<script>
+    let numeroCorrente = 0;
+    let score = 0;
+
+    /**
+     * Genera un numero casuale tra 100 e 999.
+     */
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    /**
+     * Resetta i campi di input e genera un nuovo numero da scomporre.
+     */
+    function generaNuovoNumero() {
+        // 1. Genera e mostra il nuovo numero (tra 100 e 999)
+        numeroCorrente = getRandomInt(100, 999);
+        document.getElementById('numero-da-scomporre').innerText = numeroCorrente;
+
+        // 2. Pulisce i campi di input
+        document.getElementById('input-c').value = '';
+        document.getElementById('input-d').value = '';
+        document.getElementById('input-u').value = '';
+
+        // 3. Resetta il feedback
+        const feedbackDiv = document.getElementById('feedback');
+        feedbackDiv.style.display = 'none';
+        feedbackDiv.className = '';
+        
+        // Imposta il focus sulla prima casella
+        document.getElementById('input-c').focus();
+    }
+
+    /**
+     * Controlla la scomposizione inserita dall'utente.
+     */
+    function controllaScomposizione() {
+        const inputC = document.getElementById('input-c').value;
+        const inputD = document.getElementById('input-d').value;
+        const inputU = document.getElementById('input-u').value;
+        const feedbackDiv = document.getElementById('feedback');
+
+        feedbackDiv.style.display = 'block';
+        
+        // 1. Verifica che tutti i campi siano stati riempiti
+        if (inputC === '' || inputD === '' || inputU === '') {
+             feedbackDiv.className = 'incorrect';
+             feedbackDiv.innerHTML = '⚠️ **Attenzione!** Devi inserire un valore in tutti e tre i campi (C, D, U).';
+             return;
+        }
+
+        // Converte i valori (ora sappiamo che non sono vuoti)
+        const valC = parseInt(inputC);
+        const valD = parseInt(inputD);
+        const valU = parseInt(inputU);
+
+        // 2. Calcola i valori corretti
+        const numStr = String(numeroCorrente);
+        
+        // Estrazione C, D, U dalla stringa del numero (es. "345" -> '3', '4', '5')
+        const correttoC = parseInt(numStr[0]);
+        const correttoD = parseInt(numStr[1]);
+        const correttoU = parseInt(numStr[2]);
+
+        // 3. Verifica la correttezza confrontando i valori
+        const isCorretto = (valC === correttoC) && 
+                           (valD === correttoD) && 
+                           (valU === correttoU);
+
+        if (isCorretto) {
+            feedbackDiv.className = 'correct';
+            feedbackDiv.innerHTML = '✅ **Corretto!** Ottimo lavoro. Clicca su "Nuovo Numero" per continuare.';
+            score++;
+        } else {
+            feedbackDiv.className = 'incorrect';
+            feedbackDiv.innerHTML = `❌ **Errato.** Riprova! La scomposizione corretta per ${numeroCorrente} era: **C=${correttoC}, D=${correttoD}, U=${correttoU}**.`;
+        }
+        
+        document.getElementById('score-value').innerText = score;
+    }
+
+    // Funzione eseguita all'apertura della pagina
+    window.onload = function() {
+        // Genera subito il primo numero visibile
+        generaNuovoNumero(); 
+    };
+</script>
+
+</body>
+</html>
