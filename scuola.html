@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problemi Matematici: Tema Scuola ✏️</title>
+    <style>
+        /* TEMA SCUOLA: BLU, ROSSO, LILLA */
+        body {
+            font-family: 'Verdana', sans-serif; /* Font Aggiornato */
+            background-color: #f0f8ff; /* Azzurro Chiaro (Carta da quaderno) */
+            color: #191970; /* Blu Scuro (Inchiostro) */
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Ombra più pulita */
+        }
+
+        h1 {
+            color: #8a2be2; /* Blu-Violetto (Lilla Intenso) */
+            text-shadow: 1px 1px #ffc0cb;
+            margin-bottom: 30px;
+        }
+
+        #problem-text {
+            font-size: 1.3em;
+            color: #333333; /* Testo NERO/Grigio Scuro */
+            min-height: 100px;
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 2px dashed #ff4500; /* Rosso-Arancio (Matita) */
+            border-radius: 8px;
+            background-color: #fff0f5; /* Rosa Chiaro (Foglietto) */
+            text-align: left;
+        }
+        
+        .question {
+            color: #dc143c; /* Rosso Scarlatto (Evidenziatore) */
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* Sezione Dati e Risposta */
+        .input-group, .answer-section {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .input-group label, .answer-section label {
+            display: block;
+            font-weight: bold;
+            color: #4169e1; /* Blu Vivo */
+            margin-bottom: 5px;
+        }
+
+        textarea, .answer-section input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #8a2be2; /* Lilla Intenso */
+            border-radius: 6px;
+            font-size: 1.1em;
+            box-sizing: border-box;
+            background-color: #e6e6fa; /* Lavanda Chiaro */
+            resize: none;
+            height: 80px;
+            font-family: 'Verdana', sans-serif;
+        }
+
+        /* ---------------------------------------------------- */
+        /* Stile per la Griglia di Calcolo in Colonna */
+        /* ---------------------------------------------------- */
+        .calculation-grid {
+            background-color: #f8f8ff; /* Bianco Off-White */
+            border: 2px solid #dc143c; /* Rosso Scarlatto */
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .calculation-grid h3 {
+            color: #4169e1; /* Blu Vivo */
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .grid-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .grid-cell {
+            width: 50px;
+            height: 35px;
+            line-height: 35px;
+            margin: 0 2px;
+        }
+        
+        .symbol-cell {
+            width: 30px;
+            height: 35px;
+            line-height: 35px;
+            background-color: #8a2be2; /* Lilla Intenso */
+            color: white;
+            border: 1px solid #6a5acd;
+            margin-left: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .equals-cell {
+            background-color: #4169e1; /* Blu Vivo */
+        }
+
+        /* Input Riporto (più piccolo e alto) */
+        .carry-row .grid-cell input {
+            width: 30px;
+            height: 20px;
+            font-size: 0.8em;
+            color: #dc143c; /* Rosso per il Riporto */
+            border: 1px dashed #dc143c;
+            background-color: #ffcccc; /* Rosso Chiaro */
+            font-family: 'Verdana', sans-serif;
+        }
+        .carry-row {
+            margin-bottom: 5px;
+        }
+
+        /* Input per i Numeri e Risultato */
+        .number-row .grid-cell input, .result-row .grid-cell input {
+            width: 48px;
+            height: 33px;
+            padding: 0;
+            text-align: center;
+            font-size: 1.1em;
+            border: 1px solid #ccc;
+            outline: none;
+            box-sizing: border-box;
+            background-color: white;
+            font-family: 'Verdana', sans-serif;
+        }
+        
+        .result-row {
+            border-top: 2px solid #4169e1; /* Linea blu sotto il calcolo */
+            padding-top: 5px;
+        }
+        
+        /* ---------------------------------------------------- */
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .controls button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        #check-button {
+            background-color: #228b22; /* Verde Scuro (Corretto) */
+            color: white;
+        }
+        #check-button:hover:not(:disabled) { background-color: #1e7d1e; transform: scale(1.05); }
+
+        #next-button {
+            background-color: #8a2be2; /* Lilla Intenso */
+            color: white;
+            display: none;
+        }
+        #next-button:hover:not(:disabled) { background-color: #791bd1; transform: scale(1.05); }
+
+        #status-message {
+            margin-top: 20px;
+            font-size: 1.4em;
+            font-weight: bold;
+            min-height: 30px;
+        }
+        .correct { color: #228b22; } /* Verde scuro */
+        .incorrect { color: #dc143c; } /* Rosso Scarlatto */
+        
+        #solution-display {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+            min-height: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Problemi Matematici: A Scuola di Calcolo ✏️</h1>
+        
+        <div id="problem-text">Clicca su "Inizia l'Esercizio" per caricare il primo problema!</div>
+
+        <div class="input-group">
+            <label for="data-input">Dati (Cosa conosci?)</label>
+            <textarea id="data-input" rows="3" placeholder="Scrivi i numeri importanti e la domanda..."></textarea>
+        </div>
+        
+        <div class="calculation-grid">
+            <h3>Griglia di Calcolo in Colonna (Riporto/Prestito)</h3>
+            
+            <div class="grid-row carry-row">
+                <div class="grid-cell"><input type="number" class="carry-input user-input" id="carry_c" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div> <div class="grid-cell"><input type="number" class="carry-input user-input" id="carry_d" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div> <div class="grid-cell"></div> <div style="width: 40px;"></div> </div>
+
+            <div class="grid-row number-row">
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="num1_c" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="num1_d" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="num1_u" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div style="width: 40px;"></div> </div>
+            
+            <div class="grid-row number-row">
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="num2_c" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="num2_d" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="num2_u" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="symbol-cell" id="operator-display">?</div> </div>
+            
+            <div class="grid-row result-row">
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="result_c" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="result_d" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="result_u" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="symbol-cell equals-cell">=</div>
+            </div>
+            
+            <div id="solution-display"></div>
+        </div>
+        
+        <div class="answer-section">
+            <label for="answer-input">Risposta Finale (Solo il numero totale)</label>
+            <input type="number" id="answer-input" placeholder="Il risultato totale del tuo calcolo">
+        </div>
+
+        <div class="controls">
+            <button id="start-button" onclick="loadRandomProblem()">Inizia l'Esercizio</button>
+            <button id="check-button" onclick="checkAnswer()" disabled>Controlla Risposta Finale</button>
+            <button id="next-button" onclick="loadRandomProblem()">Prossimo Problema ➡️</button>
+        </div>
+        
+        <div id="status-message"></div>
+    </div>
+
+    <script>
+        // Array di 15 problemi aggiornato - DOMANDE INIZIANO CON MAIUSCOLA
+        const problems = [
+            // ADDITION PROBLEMS
+            {
+                text: "In biblioteca ci sono 134 libri di storia e 58 libri di geografia. <span class='question'>Quanti libri ci sono in totale? 📚</span>",
+                answer: 192,
+                operator: '+',
+                solution: "134 + 58 = 192 libri. Addizione con riporto!",
+            },
+            {
+                text: "La maestra ha 150 matite rosse e 75 matite blu. <span class='question'>Quante matite ha in totale? 🖍️</span>",
+                answer: 225,
+                operator: '+',
+                solution: "150 + 75 = 225 matite. Addizione con riporto nelle decine!",
+            },
+            {
+                text: "Una classe ha 211 pennarelli a punta fine e 143 pennarelli a punta grossa. <span class='question'>Quanti pennarelli ci sono in totale? 🎨</span>",
+                answer: 354,
+                operator: '+',
+                solution: "211 + 143 = 354 pennarelli. Addizione senza riporto!",
+            },
+            {
+                text: "La scuola ha ricevuto 95 palloni da calcio e 128 palloni da basket. <span class='question'>Quanti palloni ha in totale la palestra? ⚽🏀</span>",
+                answer: 223,
+                operator: '+',
+                solution: "95 + 128 = 223 palloni. Addizione con riporto!",
+            },
+            {
+                text: "I bambini di prima hanno colorato 319 disegni. Quelli di seconda ne hanno colorati 180. <span class='question'>Quanti disegni hanno colorato in due classi? 🖼️</span>",
+                answer: 499,
+                operator: '+',
+                solution: "319 + 180 = 499 disegni. Addizione semplice!",
+            },
+
+            // SUBTRACTION PROBLEMS
+            {
+                text: "Ci sono 245 alunni iscritti al corso di musica. Se ne ritirano 123. <span class='question'>Quanti alunni restano nel corso? 🎶</span>",
+                answer: 122,
+                operator: '-',
+                solution: "245 - 123 = 122 alunni. Sottrazione semplice!",
+            },
+            {
+                text: "La scolaresca ha 93 gite programmate. Ne annullano 47 a causa del maltempo. <span class='question'>Quante gite restano da fare? 🚌</span>",
+                answer: 46,
+                operator: '-',
+                solution: "93 - 47 = 46 gite. Hai dovuto fare il prestito!",
+            },
+            {
+                text: "La cartoleria ha 110 quaderni a righe. Ne vende 25 durante la ricreazione. <span class='question'>Quanti quaderni sono rimasti? 📓</span>",
+                answer: 85,
+                operator: '-',
+                solution: "110 - 25 = 85 quaderni. Hai dovuto gestire il prestito con lo zero!",
+            },
+            {
+                text: "L'auditorium ha 450 sedie. Per una recita, ne vengono rimosse 162. <span class='question'>Quante sedie sono rimaste nell'auditorium? 🪑</span>",
+                answer: 288,
+                operator: '-',
+                solution: "450 - 162 = 288 sedie. Sottrazione con prestiti multipli!",
+            },
+            {
+                text: "La bidella deve pulire 399 finestre. Ne ha già pulite 105. <span class='question'>Quante finestre deve ancora pulire? ✨</span>",
+                answer: 294,
+                operator: '-',
+                solution: "399 - 105 = 294 finestre. Sottrazione semplice!",
+            },
+
+            // MULTIPLICATION PROBLEMS
+            {
+                text: "Ogni alunno usa 6 pennarelli per il suo progetto. Se ci sono 14 progetti, <span class='question'>Quanti pennarelli servono in totale? 🖊️</span>",
+                answer: 84,
+                operator: 'x',
+                solution: "14 x 6 = 84 pennarelli. Moltiplicazione a due cifre!",
+            },
+            {
+                text: "Ci sono 4 armadi, e in ogni armadio ci sono 35 risme di carta. <span class='question'>Quante risme ci sono in tutto? 📄</span>",
+                answer: 140,
+                operator: 'x',
+                solution: "35 x 4 = 140 risme. Moltiplicazione con riporto!",
+            },
+            {
+                text: "Il pulmino fa una corsa di 112 km. Se fa il giro 5 volte al giorno, <span class='question'>Quanti km percorre in totale? 🚌</span>",
+                answer: 560,
+                operator: 'x',
+                solution: "112 x 5 = 560 km. Moltiplicazione a tre cifre!",
+            },
+            {
+                text: "Il negozio vende 7 gomme da cancellare al giorno. In 20 giorni, <span class='question'>Quante gomme avrà venduto? Eraser</span>",
+                answer: 140,
+                operator: 'x',
+                solution: "20 x 7 = 140 gomme. Moltiplicazione con lo zero!",
+            },
+            {
+                text: "Ogni studente ha bisogno di 6 quaderni all'anno. Se ci sono 130 studenti, <span class='question'>Quanti quaderni servono in totale? 🎒</span>",
+                answer: 780,
+                operator: 'x',
+                solution: "130 x 6 = 780 quaderni. Moltiplicazione con riporto a tre cifre!",
+            },
+        ];
+
+        let currentProblem = null;
+        const problemTextEl = document.getElementById('problem-text');
+        const answerInputEl = document.getElementById('answer-input');
+        const dataInputEl = document.getElementById('data-input');
+        const checkButton = document.getElementById('check-button');
+        const nextButton = document.getElementById('next-button');
+        const startButton = document.getElementById('start-button');
+        const statusMessageEl = document.getElementById('status-message');
+        const solutionDisplayEl = document.getElementById('solution-display');
+        const operatorDisplayEl = document.getElementById('operator-display');
+        
+        // Elementi input della griglia
+        const userInputs = document.querySelectorAll('.user-input'); 
+
+        /**
+         * Resetta la griglia di calcolo e l'interfaccia.
+         */
+        function resetGrid() {
+            userInputs.forEach(input => {
+                input.value = '';
+                input.disabled = false;
+                input.style.backgroundColor = 'white';
+            });
+            operatorDisplayEl.textContent = '?';
+        }
+
+        /**
+         * Sceglie un problema casuale e lo carica nella pagina.
+         */
+        function loadRandomProblem() {
+            const randomIndex = Math.floor(Math.random() * problems.length);
+            currentProblem = problems[randomIndex];
+
+            // Resetta l'interfaccia e la griglia
+            resetGrid();
+            problemTextEl.innerHTML = currentProblem.text;
+            answerInputEl.value = '';
+            dataInputEl.value = '';
+            statusMessageEl.innerHTML = '';
+            solutionDisplayEl.innerHTML = '';
+
+            // Abilita/Disabilita i pulsanti e gli input
+            checkButton.disabled = false;
+            answerInputEl.disabled = false;
+            dataInputEl.disabled = false;
+            nextButton.style.display = 'none';
+            startButton.style.display = 'none';
+        }
+
+        /**
+         * Controlla la risposta finale data dall'utente.
+         */
+        function checkAnswer() {
+            if (!currentProblem) {
+                statusMessageEl.innerHTML = 'Per favore, carica un problema prima!';
+                return;
+            }
+
+            const userAnswer = parseInt(answerInputEl.value);
+            const correctAnswer = currentProblem.answer;
+
+            // 1. Verifica Risposta Finale
+            if (isNaN(userAnswer)) {
+                statusMessageEl.innerHTML = 'Devi inserire un numero valido nella risposta finale! 🧐';
+                statusMessageEl.className = 'incorrect';
+                return;
+            }
+
+            // Disabilita tutti gli input
+            answerInputEl.disabled = true;
+            dataInputEl.disabled = true;
+            checkButton.disabled = true;
+            nextButton.style.display = 'inline-block';
+            userInputs.forEach(input => input.disabled = true);
+
+            // 2. Feedback
+            let isCorrect = (userAnswer === correctAnswer);
+            
+            if (isCorrect) {
+                statusMessageEl.innerHTML = '🎉 RISPOSTA CORRETTA! Lavoro impeccabile!';
+                statusMessageEl.className = 'correct';
+            } else {
+                statusMessageEl.innerHTML = `❌ RISPOSTA SBAGLIATA. La risposta corretta era ${correctAnswer}.`;
+                statusMessageEl.className = 'incorrect';
+            }
+            
+            // 3. Popolamento Griglia Risultato e rivelazione operatore
+            operatorDisplayEl.textContent = currentProblem.operator;
+
+            const finalResultC = correctAnswer >= 100 ? Math.floor(correctAnswer / 100) : '';
+            const finalResultD = correctAnswer >= 10 ? Math.floor((correctAnswer % 100) / 10) : '';
+            const finalResultU = correctAnswer % 10;
+            
+            document.getElementById('result_c').value = finalResultC;
+            document.getElementById('result_d').value = finalResultD;
+            document.getElementById('result_u').value = finalResultU;
+
+            const color = isCorrect ? '#ccffcc' : '#ffcccc';
+            document.getElementById('result_c').style.backgroundColor = color;
+            document.getElementById('result_d').style.backgroundColor = color;
+            document.getElementById('result_u').style.backgroundColor = color;
+
+            solutionDisplayEl.innerHTML = `Spiegazione: <strong>${currentProblem.solution}</strong>`;
+        }
+    </script>
+
+</body>
+</html>
