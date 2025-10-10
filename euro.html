@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problemi Matematici: Euro e Risparmio 💰</title>
+    <style>
+        /* TEMA EURO E RISPARMIO: Verde Denaro, Blu/Grigio pulito */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fcf8; /* Sfondo molto chiaro */
+            color: #2e4053; /* Blu scuro elegante */
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #008000; /* Verde Denaro */
+            text-shadow: 1px 1px #ccffcc;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        #problem-text {
+            font-size: 1.4em;
+            color: #333333;
+            min-height: 100px;
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #c8e6c9; /* Bordo verde chiaro */
+            border-radius: 8px;
+            background-color: #e8f5e9; /* Sfondo problema verde chiarissimo */
+            text-align: left;
+        }
+        
+        .question {
+            color: #c0392b; /* Rosso per l'attenzione */
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        
+        /* Sezione Dati e Risposta */
+        .input-group, .answer-section {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .input-group label, .answer-section label {
+            display: block;
+            font-weight: bold;
+            color: #34495e; /* Grigio scuro/blu */
+            margin-bottom: 5px;
+        }
+
+        textarea, .answer-section input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #5d6d7e; /* Bordo grigio-blu */
+            border-radius: 5px;
+            font-size: 1.1em;
+            box-sizing: border-box;
+            background-color: #f4f6f7;
+            resize: none;
+            height: 80px;
+            font-family: inherit;
+        }
+        
+        /* ---------------------------------------------------- */
+        /* Stile per la Griglia di Calcolo in Colonna */
+        /* ---------------------------------------------------- */
+        .calculation-grid {
+            background-color: #f7f9f9;
+            border: 2px solid #008000; /* Bordo verde */
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .calculation-grid h3 {
+            color: #008000;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .grid-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .grid-cell {
+            width: 50px;
+            height: 35px;
+            line-height: 35px;
+            margin: 0 2px;
+        }
+        
+        .symbol-cell {
+            width: 30px;
+            height: 35px;
+            line-height: 35px;
+            background-color: #3498db; /* Blu */
+            color: white;
+            border: 1px solid #2980b9;
+            margin-left: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .equals-cell {
+            background-color: #eaf2f8;
+            color: #2e4053;
+        }
+
+        /* Input Riporto/Prestito */
+        .carry-row .grid-cell input {
+            width: 30px;
+            height: 20px;
+            font-size: 0.8em;
+            color: #c0392b; /* Rosso */
+            border: 1px dashed #c0392b;
+            background-color: #fdedec;
+            font-family: inherit;
+        }
+        .carry-row {
+            margin-bottom: 5px;
+        }
+
+        /* Input per i Numeri e Risultato */
+        .number-row .grid-cell input, .result-row .grid-cell input {
+            width: 48px;
+            height: 33px;
+            padding: 0;
+            text-align: center;
+            font-size: 1.1em;
+            border: 1px solid #ccc;
+            outline: none;
+            box-sizing: border-box;
+            background-color: white;
+            font-family: inherit;
+        }
+        
+        .result-row {
+            border-top: 2px solid #2e4053;
+            padding-top: 5px;
+        }
+        
+        /* ---------------------------------------------------- */
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .controls button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        #check-button {
+            background-color: #008000;
+            color: white;
+        }
+        #check-button:hover:not(:disabled) { background-color: #006400; transform: scale(1.03); }
+
+        #next-button {
+            background-color: #3498db;
+            color: white;
+            display: none;
+        }
+        #next-button:hover:not(:disabled) { background-color: #2980b9; transform: scale(1.03); }
+
+        #status-message {
+            margin-top: 20px;
+            font-size: 1.4em;
+            font-weight: bold;
+            min-height: 30px;
+        }
+        .correct { color: #008000; }
+        .incorrect { color: #c0392b; }
+        
+        #solution-display {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+            min-height: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Problemi con l'Euro: Gestione del Risparmio 💰</h1>
+        
+        <div id="problem-text">Clicca su "Inizia l'Esercizio" per caricare il primo problema!</div>
+
+        <div class="input-group">
+            <label for="data-input">Dati (Indica i numeri importanti e la domanda)</label>
+            <textarea id="data-input" rows="3" placeholder="Scrivi i numeri, il simbolo dell'Euro (€) e la domanda..."></textarea>
+        </div>
+        
+        <div class="calculation-grid">
+            <h3>Griglia di Calcolo (Con Riporto/Prestito)</h3>
+            
+            <div class="grid-row carry-row">
+                <div class="grid-cell"><input type="number" class="carry-input user-input" id="carry_c" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="carry-input user-input" id="carry_d" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"></div>
+                <div style="width: 40px;"></div>
+            </div>
+
+            <div class="grid-row number-row">
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="num1_c" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="num1_d" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="num1_u" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div style="width: 40px;"></div>
+            </div>
+            
+            <div class="grid-row number-row">
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="num2_c" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="num2_d" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="num2_u" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="symbol-cell" id="operator-display">?</div>
+            </div>
+            
+            <div class="grid-row result-row">
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="result_c" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="result_d" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="grid-cell"><input type="number" class="grid-input user-input" id="result_u" maxlength="1" oninput="this.value=this.value.slice(0,1)"></div>
+                <div class="symbol-cell equals-cell">=</div>
+            </div>
+            
+            <div id="solution-display"></div>
+        </div>
+        
+        <div class="answer-section">
+            <label for="answer-input">Risposta Finale (Solo il numero totale, prima del simbolo €)</label>
+            <input type="number" id="answer-input" placeholder="Il risultato totale del tuo calcolo (es: 150)">
+        </div>
+
+        <div class="controls">
+            <button id="start-button" onclick="loadRandomProblem()">Inizia l'Esercizio</button>
+            <button id="check-button" onclick="checkAnswer()" disabled>Controlla Risposta Finale</button>
+            <button id="next-button" onclick="loadRandomProblem()">Prossimo Problema ➡️</button>
+        </div>
+        
+        <div id="status-message"></div>
+    </div>
+
+    <script>
+        // Array dei problemi a tema Euro e Risparmio
+        const problems = [
+            // ADDITION (Euro)
+            {
+                text: "Maria ha risparmiato €145. La nonna le regala altri €65 per il suo compleanno. <span class='question'>Quanti euro ha Maria in totale?</span>",
+                answer: 210,
+                operator: '+',
+                solution: "€145 + €65 = €210. Ottimo riporto nelle decine!",
+            },
+            {
+                text: "Un negozio vende un giocattolo a €238 e un libro a €121. <span class='question'>Qual è il costo totale dei due articoli?</span>",
+                answer: 359,
+                operator: '+',
+                solution: "€238 + €121 = €359. Addizione senza riporto.",
+            },
+            {
+                text: "Il papà ha €90 nel portafoglio e ne preleva €175 dal bancomat. <span class='question'>Quanti euro ha ora?</span>",
+                answer: 265,
+                operator: '+',
+                solution: "€90 + €175 = €265. Addizione con riporto.",
+            },
+
+            // SUBTRACTION (Euro)
+            {
+                text: "Il salvadanaio contiene €320. Andrea usa €105 per comprare un videogioco. <span class='question'>Quanti euro restano nel salvadanaio?</span>",
+                answer: 215,
+                operator: '-',
+                solution: "€320 - €105 = €215. Sottrazione con prestito.",
+            },
+            {
+                text: "Una bicicletta costa €485. Viene scontata di €150. <span class='question'>Qual è il nuovo prezzo della bicicletta?</span>",
+                answer: 335,
+                operator: '-',
+                solution: "€485 - €150 = €335. Sottrazione semplice senza prestito.",
+            },
+            {
+                text: "Un tablet costa €200. Se hai solo €75, <span class='question'>Quanti euro ti mancano per acquistarlo?</span>",
+                answer: 125,
+                operator: '-',
+                solution: "€200 - €75 = €125. Sottrazione con prestiti multipli dallo zero.",
+            },
+
+            // MULTIPLICATION (Euro) - Moltiplicatore a una cifra
+            {
+                text: "La mamma compra 8 quaderni. Ogni quaderno costa €5. <span class='question'>Quanto spende in totale per i quaderni?</span>",
+                answer: 40,
+                operator: 'x',
+                solution: "8 x €5 = €40. Moltiplicazione base.",
+            },
+            {
+                text: "Luca riceve €15 ogni mese. <span class='question'>Quanti euro riceve in 6 mesi?</span>",
+                answer: 90,
+                operator: 'x',
+                solution: "€15 x 6 = €90. Moltiplicazione con riporto.",
+            },
+            {
+                text: "Un cinema vende 3 biglietti. Ogni biglietto costa €125. <span class='question'>Quanto incassa in totale per quei biglietti?</span>",
+                answer: 375,
+                operator: 'x',
+                solution: "€125 x 3 = €375. Moltiplicazione con riporto a tre cifre.",
+            },
+            {
+                text: "Ogni amico regala €20. Se ci sono 4 amici, <span class='question'>Quanti euro raccolgono in totale?</span>",
+                answer: 80,
+                operator: 'x',
+                solution: "€20 x 4 = €80. Moltiplicazione con lo zero.",
+            },
+            
+            // DIVISION (Euro) - Entro il 100
+            {
+                text: "La maestra distribuisce €50 in modo equo a 5 bambini. <span class='question'>Quanti euro riceve ogni bambino?</span>",
+                answer: 10,
+                operator: ':',
+                solution: "€50 : 5 = €10. Divisione entro il 100.",
+            },
+            {
+                text: "Un totale di €64 viene diviso per comprare 8 figurine. <span class='question'>Quanto costa ogni figurina?</span>",
+                answer: 8,
+                operator: ':',
+                solution: "€64 : 8 = €8. Divisione con tabellina dell'8.",
+            },
+            {
+                text: "La nonna ha €99 e vuole distribuirli in parti uguali tra i suoi 9 nipoti. <span class='question'>Quanti euro riceve ogni nipote?</span>",
+                answer: 11,
+                operator: ':',
+                solution: "€99 : 9 = €11. Divisione.",
+            },
+            {
+                text: "Per comprare un regalo da €48, si uniscono 6 amici. <span class='question'>Quanti euro deve mettere ciascuno?</span>",
+                answer: 8,
+                operator: ':',
+                solution: "€48 : 6 = €8. Divisione con tabellina del 6.",
+            },
+            {
+                text: "Un salvadanaio ha €42 in monete da €6. <span class='question'>Quante monete ci sono nel salvadanaio?</span>",
+                answer: 7,
+                operator: ':',
+                solution: "€42 : 6 = 7 monete. Divisione.",
+            },
+        ];
+
+        let currentProblem = null;
+        const problemTextEl = document.getElementById('problem-text');
+        const answerInputEl = document.getElementById('answer-input');
+        const dataInputEl = document.getElementById('data-input');
+        const checkButton = document.getElementById('check-button');
+        const nextButton = document.getElementById('next-button');
+        const startButton = document.getElementById('start-button');
+        const statusMessageEl = document.getElementById('status-message');
+        const solutionDisplayEl = document.getElementById('solution-display');
+        const operatorDisplayEl = document.getElementById('operator-display');
+        
+        const userInputs = document.querySelectorAll('.user-input'); 
+
+        /**
+         * Resetta la griglia di calcolo e l'interfaccia.
+         */
+        function resetGrid() {
+            userInputs.forEach(input => {
+                input.value = '';
+                input.disabled = false;
+                input.style.backgroundColor = 'white';
+            });
+            operatorDisplayEl.textContent = '?';
+        }
+
+        /**
+         * Sceglie un problema casuale e lo carica nella pagina.
+         */
+        function loadRandomProblem() {
+            const randomIndex = Math.floor(Math.random() * problems.length);
+            currentProblem = problems[randomIndex];
+
+            // Resetta l'interfaccia e la griglia
+            resetGrid();
+            problemTextEl.innerHTML = currentProblem.text;
+            answerInputEl.value = '';
+            dataInputEl.value = '';
+            statusMessageEl.innerHTML = '';
+            solutionDisplayEl.innerHTML = '';
+
+            // Abilita/Disabilita i pulsanti e gli input
+            checkButton.disabled = false;
+            answerInputEl.disabled = false;
+            dataInputEl.disabled = false;
+            nextButton.style.display = 'none';
+            startButton.style.display = 'none';
+        }
+
+        /**
+         * Controlla la risposta finale data dall'utente.
+         */
+        function checkAnswer() {
+            if (!currentProblem) {
+                statusMessageEl.innerHTML = 'Per favore, carica un problema prima!';
+                return;
+            }
+
+            const userAnswer = parseInt(answerInputEl.value);
+            const correctAnswer = currentProblem.answer;
+
+            // 1. Verifica Risposta Finale
+            if (isNaN(userAnswer)) {
+                statusMessageEl.innerHTML = 'Devi inserire un numero valido nella risposta finale! 🧐';
+                statusMessageEl.className = 'incorrect';
+                return;
+            }
+
+            // Disabilita tutti gli input
+            answerInputEl.disabled = true;
+            dataInputEl.disabled = true;
+            checkButton.disabled = true;
+            nextButton.style.display = 'inline-block';
+            userInputs.forEach(input => input.disabled = true);
+
+            // 2. Feedback
+            let isCorrect = (userAnswer === correctAnswer);
+            
+            if (isCorrect) {
+                statusMessageEl.innerHTML = '🎉 RISPOSTA CORRETTA! Sei un genio della finanza!';
+                statusMessageEl.className = 'correct';
+            } else {
+                statusMessageEl.innerHTML = `❌ RISPOSTA SBAGLIATA. La risposta corretta era ${correctAnswer}.`;
+                statusMessageEl.className = 'incorrect';
+            }
+            
+            // 3. Popolamento Griglia Risultato e rivelazione operatore
+            operatorDisplayEl.textContent = currentProblem.operator;
+
+            // Dato che i risultati delle divisioni sono entro 100, la C (centinaia) può essere vuota.
+            const finalResultC = correctAnswer >= 100 ? Math.floor(correctAnswer / 100) : '';
+            const finalResultD = correctAnswer >= 10 ? Math.floor((correctAnswer % 100) / 10) : '';
+            const finalResultU = correctAnswer % 10;
+            
+            document.getElementById('result_c').value = finalResultC;
+            document.getElementById('result_d').value = finalResultD;
+            document.getElementById('result_u').value = finalResultU;
+
+            const color = isCorrect ? '#ccffcc' : '#ffcccc';
+            document.getElementById('result_c').style.backgroundColor = color;
+            document.getElementById('result_d').style.backgroundColor = color;
+            document.getElementById('result_u').style.backgroundColor = color;
+
+            solutionDisplayEl.innerHTML = `Spiegazione: <strong>${currentProblem.solution}</strong>`;
+        }
+    </script>
+
+</body>
+</html>
