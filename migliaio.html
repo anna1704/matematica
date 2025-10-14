@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abaco Interattivo</title>
+    <style>
+        /* Stili Generali */
+        body {
+            font-family: 'Verdana', sans-serif;
+            background-color: #f0f4f7; 
+            color: #2c3e50; 
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Titolo Principale in alto */
+        h1 {
+            color: #3498db; 
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        /* Titoli delle modalità */
+        h2 {
+             color: #2c3e50; 
+             font-size: 1.5em;
+             margin-bottom: 10px;
+        }
+
+        .mode-toggle {
+            margin-bottom: 50px; 
+        }
+
+        .mode-toggle button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            background-color: #ecf0f1;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+
+        .mode-toggle button.active {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* ------------------------------------------------ */
+        /* Stili Abaco (UNIFICATO) */
+        /* ------------------------------------------------ */
+        
+        .abacus-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end; 
+            gap: 20px;
+            margin-top: 100px; 
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 5px solid #795548; /* Base in legno */
+        }
+
+        .rod {
+            width: 100px; 
+            height: 350px; 
+            position: relative;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; 
+            align-items: center; 
+        }
+
+        /* Linea verticale dell'Asta */
+        .rod-line {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background-color: #3e2723; /* Marrone scuro */
+            z-index: 1; /* Sotto le palline */
+        }
+
+        .rod-label {
+            position: absolute;
+            top: -50px; 
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            font-size: 1.2em;
+            z-index: 3; /* Sopra tutto */
+        }
+        
+        /* Etichette e Scritte Input con Colori Specifici (Unificato) */
+        #label_k, .k-color { color: #ff6f00; } /* Arancione (Migliaia) */
+        #label_h, .h-color { color: #388e3c; } /* Verde (Centinaia) */
+        #label_da, .da-color { color: #d32f2f; } /* Rosso (Decine) */
+        #label_u, .u-color { color: #1976d2; } /* Blu (Unità) */
+        
+        /* Controlli a Pulsante (simulazione drag&drop) */
+        .abacus-controls {
+            display: flex; 
+            justify-content: center;
+            gap: 5px;
+            margin-top: 15px;
+            width: 100%; 
+        }
+        .abacus-button {
+            padding: 5px 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 40px;
+        }
+        .abacus-button:active {
+            background-color: #2980b9;
+        }
+        .abacus-button.minus {
+            background-color: #e74c3c;
+        }
+        .abacus-button.minus:active {
+            background-color: #c0392b;
+        }
+
+        /* Stile Palline (Visualizzazione) */
+        .beads-area {
+            width: 100%;
+            height: 100%; 
+            display: flex;
+            flex-direction: column-reverse; /* Impila dal basso */
+            align-items: center; /* Centra le palline orizzontalmente sull'asta */
+            
+            z-index: 2; /* Sopra la linea dell'asta */
+            padding-bottom: 5px; /* Spazio tra l'ultima pallina e la base */
+        }
+        
+        .bead {
+            width: 28px; 
+            height: 28px; 
+            border-radius: 50%;
+            margin: 0.5px 0; 
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Colori Palline */
+        .bead.k { background-color: #ff9800; border-color: #e65100; } 
+        .bead.h { background-color: #4caf50; border-color: #1b5e20; } 
+        .bead.da { background-color: #f44336; border-color: #b71c1c; } 
+        .bead.u { background-color: #2196f3; border-color: #0d47a1; } 
+
+
+        /* ------------------- Stili Modalità ------------------- */
+        #number-to-decompose {
+            font-size: 3em;
+            font-weight: 900;
+            color: #d32f2f;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            padding: 10px;
+            background-color: #ffebee;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        
+        /* Stili Composizione Target */
+        #composition-target {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 30px;
+        }
+        #composition-target-input {
+            font-size: 2em;
+            font-weight: 900;
+            width: 150px;
+            padding: 10px;
+            text-align: center;
+            border: 3px solid #3498db;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        /* Stili Scomposizione (Input) */
+        .decomposition-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .decomp-group {
+            text-align: center;
+        }
+        .decomp-group label {
+            display: block;
+            font-weight: bold;
+        }
+        .decomp-group input {
+            width: 50px;
+            padding: 8px;
+            margin-top: 5px;
+            font-size: 1.2em;
+            text-align: center;
+            border: 2px solid #bdc3c7;
+            border-radius: 5px;
+        }
+        .decomp-group input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        /* ------------------- Stili Risultati e Controlli ------------------- */
+        .result-box {
+            font-size: 1.6em;
+            font-weight: bold;
+            min-height: 40px;
+            margin-top: 20px;
+        }
+        .correct { color: #388e3c; } 
+        .incorrect { color: #d32f2f; } 
+
+        .controls { margin-top: 30px; }
+
+        .controls button {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        #check-button-decomp, #check-button-comp {
+            background-color: #2980b9;
+            color: white;
+        }
+        #check-button-decomp:hover, #check-button-comp:hover { background-color: #2471a3; }
+
+        #new-problem-button-decomp, #new-problem-button-comp {
+            background-color: #f39c12;
+            color: white;
+        }
+        #new-problem-button-decomp:hover, #new-problem-button-comp:hover { background-color: #e67e22; }
+
+        /* Stili Composizione Specifici */
+        #composition-target-value {
+            font-size: 1.2em;
+            display: inline-block;
+            margin-top: 10px;
+            background-color: #ebf5fb;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        #current-composition-status {
+            display: none; /* Nascondiamo lo status intermedio */
+        }
+        
+        /* Nascosto in Scomposizione */
+        #current-decomposition-status {
+            display: none; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Abaco Interattivo</h1>
+        
+        <p>Utilizza i pulsanti **(+)** e **(-)** sotto l'abaco per aggiungere o togliere palline (solo in modalità Composizione).</p>
+
+        <div class="mode-toggle">
+            <button id="btn-decomposition" onclick="setMode('decomposition')" class="active">Modalità Scomposizione</button>
+            <button id="btn-composition" onclick="setMode('composition')">Modalità Composizione</button>
+        </div>
+        
+        <div class="abacus-container">
+            
+            <div class="rod">
+                <span class="rod-label" id="label_k">k</span>
+                <div class="rod-line"></div>
+                <div id="beads_k" class="beads-area"></div>
+                <div class="abacus-controls" id="controls_k">
+                    <button class="abacus-button minus" onclick="changeAbacusValue('k', -1)">-</button>
+                    <button class="abacus-button plus" onclick="changeAbacusValue('k', 1)">+</button>
+                </div>
+            </div>
+            
+            <div class="rod">
+                <span class="rod-label" id="label_h">h</span>
+                <div class="rod-line"></div>
+                <div id="beads_h" class="beads-area"></div>
+                <div class="abacus-controls" id="controls_h">
+                    <button class="abacus-button minus" onclick="changeAbacusValue('h', -1)">-</button>
+                    <button class="abacus-button plus" onclick="changeAbacusValue('h', 1)">+</button>
+                </div>
+            </div>
+            
+            <div class="rod">
+                <span class="rod-label" id="label_da">da</span>
+                <div class="rod-line"></div>
+                <div id="beads_da" class="beads-area"></div>
+                <div class="abacus-controls" id="controls_da">
+                    <button class="abacus-button minus" onclick="changeAbacusValue('da', -1)">-</button>
+                    <button class="abacus-button plus" onclick="changeAbacusValue('da', 1)">+</button>
+                </div>
+            </div>
+            
+            <div class="rod">
+                <span class="rod-label" id="label_u">u</span>
+                <div class="rod-line"></div>
+                <div id="beads_u" class="beads-area"></div>
+                <div class="abacus-controls" id="controls_u">
+                    <button class="abacus-button minus" onclick="changeAbacusValue('u', -1)">-</button>
+                    <button class="abacus-button plus" onclick="changeAbacusValue('u', 1)">+</button>
+                </div>
+            </div>
+            
+        </div>
+        <div id="decomposition-mode">
+            <h2>Scomponi il numero visualizzato e scrivine le cifre: <div id="number-to-decompose"></div></h2>
+            
+            <div class="decomposition-inputs">
+                <div class="decomp-group">
+                    <label for="input_k" class="k-color">Migliaia (k)</label>
+                    <input type="number" id="input_k" min="0" max="9" value="0">
+                </div>
+                <div class="decomp-group">
+                    <label for="input_h" class="h-color">Centinaia (h)</label>
+                    <input type="number" id="input_h" min="0" max="9" value="0">
+                </div>
+                <div class="decomp-group">
+                    <label for="input_da" class="da-color">Decine (da)</label>
+                    <input type="number" id="input_da" min="0" max="9" value="0">
+                </div>
+                <div class="decomp-group">
+                    <label for="input_u" class="u-color">Unità (u)</label>
+                    <input type="number" id="input_u" min="0" max="9" value="0">
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="check-button-decomp" onclick="checkDecomposition()">Controlla Scomposizione</button>
+                <button id="new-problem-button-decomp" onclick="loadNewDecompositionProblem()">Nuovo Numero</button>
+            </div>
+            <div id="decomposition-result" class="result-box"></div>
+        </div>
+
+        <div id="composition-mode" style="display: none;">
+            <h2>Componi sull'abaco il numero formato da:</h2>
+            <div id="composition-target"></div>
+            
+            <input type="number" id="composition-target-input" placeholder="Scrivi il numero" min="1000" max="9999">
+
+            <div id="current-composition-status"></div>
+            
+            <div class="controls">
+                <button id="check-button-comp" onclick="checkComposition()">Controlla Composizione</button>
+                <button id="new-problem-button-comp" onclick="loadNewCompositionProblem()">Nuovo Numero</button>
+            </div>
+            <div id="composition-result" class="result-box"></div>
+        </div>
+    </div>
+
+    <script>
+        let targetNumber = 0; 
+        let targetCifre = {}; // Memorizza le cifre corrette per il confronto
+        let currentMode = 'decomposition';
+        
+        const abacusValues = { k: 0, h: 0, da: 0, u: 0 };
+
+        const units = {
+            k: { id: 'k', colorClass: 'k', label: 'k', beads: 'beads_k', multiplier: 1000 },
+            h: { id: 'h', colorClass: 'h', label: 'h', beads: 'beads_h', multiplier: 100 },
+            da: { id: 'da', colorClass: 'da', label: 'da', beads: 'beads_da', multiplier: 10 },
+            u: { id: 'u', colorClass: 'u', label: 'u', beads: 'beads_u', multiplier: 1 }
+        };
+
+        const decompositionDisplay = document.getElementById('number-to-decompose');
+        const compositionTargetDisplay = document.getElementById('composition-target');
+        const compositionTargetInput = document.getElementById('composition-target-input'); // Nuovo input
+        const decompositionResult = document.getElementById('decomposition-result');
+        const compositionResult = document.getElementById('composition-result');
+        
+        const inputK = document.getElementById('input_k');
+        const inputH = document.getElementById('input_h');
+        const inputDA = document.getElementById('input_da');
+        const inputU = document.getElementById('input_u');
+        
+        const abacusControls = {
+            k: document.getElementById('controls_k'),
+            h: document.getElementById('controls_h'),
+            da: document.getElementById('controls_da'),
+            u: document.getElementById('controls_u')
+        };
+        
+        /* ------------------------------------------------ */
+        /* FUNZIONI DI BASE ABACO */
+        /* ------------------------------------------------ */
+
+        function drawBeads(unitId, count) {
+            const areaElement = document.getElementById(units[unitId].beads);
+            const colorClass = units[unitId].colorClass;
+            areaElement.innerHTML = '';
+            
+            count = Math.min(9, Math.max(0, count)); 
+
+            for (let i = 0; i < count; i++) {
+                const bead = document.createElement('div');
+                bead.className = `bead ${colorClass}`;
+                areaElement.appendChild(bead);
+            }
+        }
+
+        function changeAbacusValue(unitId, delta) {
+            if (currentMode === 'decomposition') return; 
+            
+            let newValue = abacusValues[unitId] + delta;
+            
+            newValue = Math.min(9, Math.max(0, newValue));
+            
+            abacusValues[unitId] = newValue;
+            drawBeads(unitId, newValue);
+        }
+        
+        function getComposedNumber() {
+            let num = 0;
+            num += abacusValues.k * units.k.multiplier;
+            num += abacusValues.h * units.h.multiplier;
+            num += abacusValues.da * units.da.multiplier;
+            num += abacusValues.u * units.u.multiplier;
+            return num;
+        }
+
+        function clearAbacus() {
+            abacusValues.k = 0;
+            abacusValues.h = 0;
+            abacusValues.da = 0;
+            abacusValues.u = 0;
+            drawBeads('k', 0);
+            drawBeads('h', 0);
+            drawBeads('da', 0);
+            drawBeads('u', 0);
+            
+            inputK.value = 0;
+            inputH.value = 0;
+            inputDA.value = 0;
+            inputU.value = 0;
+
+            compositionTargetInput.value = ''; // Pulisce il campo di input composizione
+        }
+
+        /* ------------------------------------------------ */
+        /* FUNZIONI MODALITÀ */
+        /* ------------------------------------------------ */
+
+        function toggleAbacusControls(show) {
+            for (const key in abacusControls) {
+                abacusControls[key].style.display = show ? 'flex' : 'none'; 
+            }
+        }
+        
+        function setMode(mode) {
+            currentMode = mode;
+            
+            document.getElementById('decomposition-mode').style.display = (mode === 'decomposition' ? 'block' : 'none');
+            document.getElementById('composition-mode').style.display = (mode === 'composition' ? 'block' : 'none');
+            
+            document.getElementById('btn-decomposition').classList.toggle('active', mode === 'decomposition');
+            document.getElementById('btn-composition').classList.toggle('active', mode === 'composition');
+            
+            if (mode === 'decomposition') {
+                toggleAbacusControls(false); 
+                loadNewDecompositionProblem();
+            } else {
+                toggleAbacusControls(true); 
+                loadNewCompositionProblem();
+            }
+        }
+
+        /* ------------------------------------------------ */
+        /* 1. FUNZIONI SCOMPOSIZIONE */
+        /* ------------------------------------------------ */
+
+        function loadNewDecompositionProblem() {
+            targetNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+            decompositionResult.textContent = '';
+            
+            clearAbacus(); 
+            
+            // Scompone e disegna il numero target
+            const targetK = Math.floor(targetNumber / units.k.multiplier);
+            const targetH = Math.floor((targetNumber % 1000) / units.h.multiplier);
+            const targetDA = Math.floor((targetNumber % 100) / units.da.multiplier);
+            const targetU = targetNumber % 10;
+            
+            abacusValues.k = targetK;
+            abacusValues.h = targetH;
+            abacusValues.da = targetDA;
+            abacusValues.u = targetU;
+            
+            drawBeads('k', targetK);
+            drawBeads('h', targetH);
+            drawBeads('da', targetDA);
+            drawBeads('u', targetU);
+
+            decompositionDisplay.textContent = targetNumber;
+        }
+
+        function checkDecomposition() {
+            
+            const userK = parseInt(inputK.value) || 0;
+            const userH = parseInt(inputH.value) || 0;
+            const userDA = parseInt(inputDA.value) || 0;
+            const userU = parseInt(inputU.value) || 0;
+
+            const targetK = Math.floor(targetNumber / units.k.multiplier);
+            const targetH = Math.floor((targetNumber % 1000) / units.h.multiplier);
+            const targetDA = Math.floor((targetNumber % 100) / units.da.multiplier);
+            const targetU = targetNumber % 10;
+            
+            const isKCorrect = userK === targetK;
+            const isHCorrect = userH === targetH;
+            const isDACorrect = userDA === targetDA;
+            const isUCorrect = userU === targetU;
+            
+            const isCorrect = isKCorrect && isHCorrect && isDACorrect && isUCorrect;
+
+            if (isCorrect) {
+                decompositionResult.textContent = `🎉 Corretto! ${targetNumber} è composto da ${targetK}k + ${targetH}h + ${targetDA}da + ${targetU}u.`;
+                decompositionResult.className = 'result-box correct';
+            } else {
+                let feedback = "❌ Sbagliato! Riprova. ";
+                
+                if (!isKCorrect) feedback += `(k: ${targetK}) `;
+                if (!isHCorrect) feedback += `(h: ${targetH}) `;
+                if (!isDACorrect) feedback += `(da: ${targetDA}) `;
+                if (!isUCorrect) feedback += `(u: ${targetU}) `;
+
+                decompositionResult.textContent = feedback;
+                decompositionResult.className = 'result-box incorrect';
+            }
+        }
+        
+        /* ------------------------------------------------ */
+        /* 2. FUNZIONI COMPOSIZIONE */
+        /* ------------------------------------------------ */
+
+        function loadNewCompositionProblem() {
+            targetNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+            compositionResult.textContent = '';
+            
+            // Calcola e salva le cifre target
+            targetCifre.k = Math.floor(targetNumber / units.k.multiplier);
+            targetCifre.h = Math.floor((targetNumber % 1000) / units.h.multiplier);
+            targetCifre.da = Math.floor((targetNumber % 100) / units.da.multiplier);
+            targetCifre.u = targetNumber % 10;
+            
+            clearAbacus(); 
+
+            // Mostra la scomposizione come richiesta
+            compositionTargetDisplay.innerHTML = `
+                <span class="k-color">${targetCifre.k}k</span> + 
+                <span class="h-color">${targetCifre.h}h</span> + 
+                <span class="da-color">${targetCifre.da}da</span> + 
+                <span class="u-color">${targetCifre.u}u</span>
+            `;
+            compositionTargetInput.value = ''; // Assicurati che l'input sia vuoto
+        }
+
+        function checkComposition() {
+            const composedNumAbacus = getComposedNumber();
+            const composedNumInput = parseInt(compositionTargetInput.value) || 0;
+            
+            let isAbacusCorrect = (
+                abacusValues.k === targetCifre.k &&
+                abacusValues.h === targetCifre.h &&
+                abacusValues.da === targetCifre.da &&
+                abacusValues.u === targetCifre.u
+            );
+
+            let isInputCorrect = composedNumInput === targetNumber;
+
+            if (isAbacusCorrect && isInputCorrect) {
+                compositionResult.textContent = `🎉 Bravo! Hai composto sull'abaco e scritto correttamente il numero ${targetNumber}!`;
+                compositionResult.className = 'result-box correct';
+            } else {
+                let feedback = "❌ Sbagliato! Riprova. ";
+                
+                if (!isAbacusCorrect) {
+                    feedback += "La composizione sull'abaco non corrisponde alle cifre richieste. ";
+                }
+                
+                if (!isInputCorrect) {
+                    feedback += `Il numero che hai scritto (${composedNumInput}) non è corretto. `;
+                }
+                
+                compositionResult.textContent = feedback;
+                compositionResult.className = 'result-box incorrect';
+            }
+        }
+
+        // Carica la modalità iniziale all'avvio
+        document.addEventListener('DOMContentLoaded', () => {
+            setMode('decomposition');
+        });
+    </script>
+
+</body>
+</html>
