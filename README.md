@@ -23,13 +23,13 @@ Il progetto si concentra su tre aree didattiche chiave: il **calcolo mentale**, 
 Queste pagine offrono esercizi focalizzati sull'applicazione pratica della matematica in scenari quotidiani tipici della terza primaria.
 
 * **Problemi Generici ([problemi.html](https://anna1704.github.io/matematica/problemi.html)):** Set di problemi vari.
-* **Euro ([euro.html](euro.html)):** Problemi incentrati sull'uso del denaro e sul calcolo di resti o costi totali.
-* **Fattoria ([fattoria.html](fattoria.html)):** Problemi di conteggio e logistica con elementi numerici semplici.
-* **Scuola ([scuola.html](scuola.html)):** Problemi relativi alla vita scolastica.
+* **Euro ([euro.html](https://anna1704.github.io/matematica/euro.html)):** Problemi incentrati sull'uso del denaro e sul calcolo di resti o costi totali.
+* **Fattoria ([fattoria.html](https://anna1704.github.io/matematica/fattoria.html)):** Problemi di conteggio e logistica con elementi numerici semplici.
+* **Scuola ([scuola.html](https://anna1704.github.io/matematica/scuola.html)):** Problemi relativi alla vita scolastica.
 
 ### 2. Abaco Interattivo (Classe delle Migliaia)
 
-**File:** [migliaio.html](migliaio.html)
+**File:** [migliaio.html](https://anna1704.github.io/matematica/migliaio.html)
 
 Questo strumento è dedicato ai numeri fino a 9.999. Permette di esercitarsi in due modalità chiave:
 
@@ -41,7 +41,7 @@ Questo strumento è dedicato ai numeri fino a 9.999. Permette di esercitarsi in 
 
 ### 3. Scomposizione Rapida (Entro il 999)
 
-**File:** [scomposizione.html](scomposizione.html)
+**File:** [scomposizione.html](https://anna1704.github.io/matematica/scomposizione.html)
 
 Questa pagina allena la velocità e precisione nella scomposizione per numeri a tre cifre, fondamentale per la comprensione del sistema decimale.
 
