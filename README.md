@@ -22,7 +22,7 @@ Il progetto si concentra su tre aree didattiche chiave: il **calcolo mentale**, 
 
 Queste pagine offrono esercizi focalizzati sull'applicazione pratica della matematica in scenari quotidiani tipici della terza primaria.
 
-* **Problemi Generici ([problemi.html](problemi.html)):** Set di problemi vari.
+* **Problemi Generici ([problemi.html](https://anna1704.github.io/matematica/problemi.html)):** Set di problemi vari.
 * **Euro ([euro.html](euro.html)):** Problemi incentrati sull'uso del denaro e sul calcolo di resti o costi totali.
 * **Fattoria ([fattoria.html](fattoria.html)):** Problemi di conteggio e logistica con elementi numerici semplici.
 * **Scuola ([scuola.html](scuola.html)):** Problemi relativi alla vita scolastica.
