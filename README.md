@@ -10,9 +10,9 @@ Il progetto si concentra su tre aree didattiche chiave: il **calcolo mentale**, 
 
 | N. | Strumento | File di Riferimento | Focus Didattico |
 | :---: | :--- | :--- | :--- |
-| **1** | **Risoluzione Problemi Contestualizzati** | `problemi.html`, `euro.html`, `fattoria.html`, `scuola.html` | Interpretazione del testo, scelta dell'operazione, contesti reali (denaro, logistica). |
-| **2** | **Abaco Interattivo (Classe delle Migliaia)** | `migliaio.html` | Consolidamento del Valore Posizionale (k, h, da, u) e del concetto di numero a quattro cifre (da 1.000 a 9.999). |
-| **3** | **Scomposizione Rapida (Entro il 999)** | `scomposizione.html` | Esercizio sulla scomposizione di numeri a tre cifre in centinaia, decine e unità. |
+| **1** | **Risoluzione Problemi Contestualizzati** | [problemi.html](problemi.html), [euro.html](euro.html), [fattoria.html](fattoria.html), [scuola.html](scuola.html) | Interpretazione del testo, scelta dell'operazione, contesti reali (denaro, logistica). |
+| **2** | **Abaco Interattivo (Classe delle Migliaia)** | [migliaio.html](migliaio.html) | Consolidamento del Valore Posizionale (k, h, da, u) e del concetto di numero a quattro cifre (da 1.000 a 9.999). |
+| **3** | **Scomposizione Rapida (Entro il 999)** | [scomposizione.html](scomposizione.html) | Esercizio sulla scomposizione di numeri a tre cifre in centinaia, decine e unità. |
 
 ---
 
@@ -20,36 +20,32 @@ Il progetto si concentra su tre aree didattiche chiave: il **calcolo mentale**, 
 
 ### 1. Risoluzione Problemi Contestualizzati
 
-Queste pagine offrono esercizi focalizzati sull'applicazione pratica della matematica in scenari quotidiani tipici della terza primaria. L'obiettivo è sviluppare la capacità di **modellizzare il problema** e scegliere la strategia di calcolo corretta.
+Queste pagine offrono esercizi focalizzati sull'applicazione pratica della matematica in scenari quotidiani tipici della terza primaria.
 
-* **Euro (`euro.html`):** Problemi incentrati sull'uso del denaro e sul calcolo di resti o costi totali.
-* **Fattoria (`fattoria.html`):** Problemi di conteggio e logistica con elementi numerici semplici.
-* **Scuola (`scuola.html`):** Problemi relativi alla vita scolastica (es. organizzazione di banchi, materiali).
+* **Problemi Generici ([problemi.html](problemi.html)):** Set di problemi vari.
+* **Euro ([euro.html](euro.html)):** Problemi incentrati sull'uso del denaro e sul calcolo di resti o costi totali.
+* **Fattoria ([fattoria.html](fattoria.html)):** Problemi di conteggio e logistica con elementi numerici semplici.
+* **Scuola ([scuola.html](scuola.html)):** Problemi relativi alla vita scolastica.
 
 ### 2. Abaco Interattivo (Classe delle Migliaia)
 
-**File:** `migliaio.html`
+**File:** [migliaio.html](migliaio.html)
 
-Questo è lo strumento più avanzato, dedicato ai numeri fino a 9.999.
+Questo strumento è dedicato ai numeri fino a 9.999. Permette di esercitarsi in due modalità chiave:
 
 #### Modalità A: Scomposizione
-
-* **Istruzioni:** Osserva il numero di palline sull'abaco (k, h, da, u) e scrivi le cifre corrispondenti nei campi di testo.
-* **Obiettivo:** Identificare il contributo di ogni posizione al numero totale.
+* **Istruzioni:** Osserva l'abaco e scrivi le cifre (k, h, da, u) del numero visualizzato.
 
 #### Modalità B: Composizione
-
-* **Istruzioni:** Ti viene data la scomposizione del numero (es. `5k + 2h + 7da + 1u`). Usa i pulsanti **(+)** e **(-)** per riempire l'abaco e poi digita il numero completo (`5271`) nel campo di risposta.
-* **Obiettivo:** Trasformare una scomposizione data in una rappresentazione fisica e numerica.
+* **Istruzioni:** Ti viene data la scomposizione in cifre. Usa i pulsanti **(+)** e **(-)** sull'abaco e poi digita il numero completo nel campo di risposta.
 
 ### 3. Scomposizione Rapida (Entro il 999)
 
-**File:** `scomposizione.html`
+**File:** [scomposizione.html](scomposizione.html)
 
-Questa pagina è focalizzata sull'allenamento della scomposizione per numeri a tre cifre, consolidando la padronanza delle centinaia, decine e unità come base per affrontare i numeri più grandi.
+Questa pagina allena la velocità e precisione nella scomposizione per numeri a tre cifre, fondamentale per la comprensione del sistema decimale.
 
-* **Istruzioni:** Ti viene dato un numero (es. `645`). Devi scrivere quante centinaia, decine e unità lo compongono.
-* **Obiettivo:** Velocizzare il riconoscimento del valore posizionale entro il 999.
+* **Istruzioni:** Ti viene dato un numero e devi scrivere quante centinaia, decine e unità lo compongono.
 
 ---
 
