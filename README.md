@@ -1,6 +1,6 @@
-# 🧠 Esercizi di Matematica Interattiva (Addizioni, Sottrazioni, Moltiplicazioni)
+# 🧠 Esercizi di Matematica Interattiva
 
-Benvenuto/a nell'applicazione web per l'allenamento matematico! Questo strumento è progettato per aiutare studenti e insegnanti a praticare la risoluzione di problemi e l'esecuzione di calcoli in colonna.
+Benvenuto/a nell'applicazione web per l'allenamento matematico! Questo strumento è progettato per aiutare studenti e insegnanti a praticare la risoluzione di problemi e l'esecuzione di calcoli in colonna, la composizione e scomposizione di numeri oltre il migliaio.
 
 ---
 
