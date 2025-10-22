@@ -55,7 +55,7 @@ Queste pagine allenano alla lettura e all'ordinamento progressivo dei numeri ent
 
 Questa pagina allena la velocità e precisione nella scomposizione per numeri a tre cifre, fondamentale per la comprensione del sistema decimale.
 
-* **Istruzioni:** Ti viene dato un numero e devi scrivere quante centinaia, decine e unità lo compongono.
+* **Istruzioni:** Ti vengono mostrati dei numeri scritti in cifre e devi abbinarli alle parole; ti vengono mostrati dei numeri e devi riordinarli dal minore al maggiore trascinandoli nelle caselle vuote.
 
 ---
 
