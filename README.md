@@ -13,6 +13,7 @@ Il progetto si concentra su tre aree didattiche chiave: il **calcolo mentale**, 
 | **1** | **Risoluzione Problemi Contestualizzati** | [problemi.html](problemi.html), [euro.html](euro.html), [fattoria.html](fattoria.html), [scuola.html](scuola.html) | Interpretazione del testo, scelta dell'operazione, contesti reali (denaro, logistica). |
 | **2** | **Abaco Interattivo (Classe delle Migliaia)** | [migliaio.html](migliaio.html) | Consolidamento del Valore Posizionale (k, h, da, u) e del concetto di numero a quattro cifre (da 1.000 a 9.999). |
 | **3** | **Scomposizione Rapida (Entro il 999)** | [scomposizione.html](scomposizione.html) | Esercizio sulla scomposizione di numeri a tre cifre in centinaia, decine e unità. |
+| **4** | **Associazione e lettura di numeri con tre e con quattro cifre, ordinamento di numeri (Entro il 9999)** | [ordinamento.html](ordinamento.html), [associanumeri.html](associanumeri.html) | Esercizio sull'abilità di lettura di numeri in cifre e in lettere, ordinamento dei numeri in ordine crescente. |
 
 ---
 
