@@ -48,6 +48,15 @@ Questa pagina allena la velocità e precisione nella scomposizione per numeri a 
 
 * **Istruzioni:** Ti viene dato un numero e devi scrivere quante centinaia, decine e unità lo compongono.
 
+### 4. Ordinamento e lettura di numeri (Entro il 9999)
+
+**File:** [ordinamento.html](https://anna1704.github.io/matematica/ordinamento.html), [associanumeri.html](https://anna1704.github.io/matematica/associanumeri.html)
+Queste pagine allenano alla lettura e all'ordinamento progressivo dei numeri entro il 9999 con attività di abbinamento attraverso il drag and drop.
+
+Questa pagina allena la velocità e precisione nella scomposizione per numeri a tre cifre, fondamentale per la comprensione del sistema decimale.
+
+* **Istruzioni:** Ti viene dato un numero e devi scrivere quante centinaia, decine e unità lo compongono.
+
 ---
 
 ## 🚀 Tecnologie Utilizzate
