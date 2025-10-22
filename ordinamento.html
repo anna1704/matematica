@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordina i Numeri (0-9999) - Drag & Drop Finale</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            background-color: #f0ffef;
+            color: #2c3e50;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+
+        /* Contenitore delle Tessere da trascinare (Sorgente) */
+        #draggable-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            min-height: 80px;
+            border: 2px dashed #95a5a6;
+            margin-bottom: 40px;
+        }
+
+        /* Tessere Numeriche (Elementi trascinabili) */
+        .card {
+            background-color: #2ecc71;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.8em;
+            font-weight: bold;
+            cursor: grab;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s;
+            min-width: 80px;
+            opacity: 1;
+        }
+        
+        /* Contenitori di destinazione (Drop Zones) */
+        #drop-zones-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .drop-zone {
+            width: 120px;
+            height: 60px;
+            border: 3px solid #2980b9;
+            border-radius: 8px;
+            background-color: #eaf2f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            color: #2980b9;
+        }
+        
+        .drop-zone.hovered {
+            background-color: #c9e6ff;
+            border-color: #1abc9c;
+        }
+
+        /* Risultati e Controlli */
+        .controls { margin-top: 20px; }
+        
+        .controls button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        
+        #check-button {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .result-box {
+            font-size: 1.6em;
+            font-weight: bold;
+            min-height: 40px;
+            margin-top: 30px;
+        }
+        .correct { color: #27ae60; }
+        .incorrect { color: #e74c3c; }
+
+        /* SEZIONE SOLUZIONE */
+        #solution-section {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffeeb3;
+            border-radius: 10px;
+            border: 1px solid #f39c12;
+        }
+        
+        #solution-numbers {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .solution-number-card {
+            background-color: #f39c12;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🔢 Ordina i Numeri (0 - 9.999) - Drag & Drop</h1>
+        
+        <h2>Trascina i numeri qui sotto nell'ordine corretto (dal più piccolo al più grande):</h2>
+        
+        <div id="draggable-cards">
+            </div>
+
+        <h2>Sequenza Ordinata:</h2>
+
+        <div id="drop-zones-container">
+            </div>
+        
+        <div id="result" class="result-box"></div>
+
+        <div id="solution-section">
+            <p style="font-weight: bold; color: #2c3e50;">✅ L'ordine corretto era:</p>
+            <div id="solution-numbers">
+                </div>
+        </div>
+        <div class="controls">
+            <button id="check-button" onclick="checkOrder()">Controlla Ordine</button>
+            <button id="new-problem-button" onclick="loadNewProblem()">Nuovo Esercizio</button>
+        </div>
+        <div id="credits">
+    <p><a href="http://didatticalibera.org" target="_blank">Anna F. Leopardi</a></p>
+    <p>Distribuito sotto Licenza <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.it" target="_blank">Creative Commons Attribuzione - Non Commerciale - Condividi allo stesso modo 4.0 Internazionale (CC BY-NC-SA 4.0)</a></p>
+</div>
+
+<style>
+/* ... il resto dei tuoi stili CSS ... */
+
+/* Stili per la sezione Crediti */
+#credits {
+    margin-top: 40px; /* Spazio sopra il box */
+    text-align: center; /* Centra il testo all'interno del div */
+    font-size: 0.8em; /* Rende il testo piccolo */
+    color: #7f8c8d; /* Un grigio leggero per i crediti */
+}
+</style>
+    </div>
+
+   <script>
+    const DRAGGABLE_CONTAINER = document.getElementById('draggable-cards');
+    const DROP_ZONES_CONTAINER = document.getElementById('drop-zones-container');
+    const RESULT_BOX = document.getElementById('result');
+    const SOLUTION_SECTION = document.getElementById('solution-section');
+    const SOLUTION_NUMBERS = document.getElementById('solution-numbers');
+    
+    let correctOrder = [];
+    const NUM_CARDS = 5;
+    const MAX_NUMBER = 9999;
+    const MIN_NUMBER = 1000;
+
+    // NUOVO ARRAY DI STATO: Traccia i numeri posizionati in base alla loro zona.
+    let currentDropState = new Array(NUM_CARDS).fill(null); // [null, null, null, null, null]
+
+    /* ------------------------------------------------ */
+    /* FUNZIONI DI INIZIALIZZAZIONE E LOGICA */
+    /* ------------------------------------------------ */
+
+    function generateRandomNumbers(count, max, min) {
+        const numbers = new Set();
+        while (numbers.size < count) {
+            numbers.add(Math.floor(Math.random() * (max - min + 1)) + min);
+        }
+        return Array.from(numbers);
+    }
+
+    function shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+
+    function createCard(number) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.textContent = number;
+        card.setAttribute('draggable', true);
+        card.setAttribute('data-number', number);
+        return card;
+    }
+
+    function createDropZone(index) {
+        const zone = document.createElement('div');
+        zone.className = 'drop-zone';
+        // Aggiungiamo un data-index per tracciare la posizione nell'array
+        zone.setAttribute('data-index', index); 
+        zone.textContent = index + 1;
+        return zone;
+    }
+
+    function loadNewProblem() {
+        // Reset di tutti gli elementi e dello stato
+        DRAGGABLE_CONTAINER.innerHTML = '';
+        DROP_ZONES_CONTAINER.innerHTML = '';
+        RESULT_BOX.textContent = '';
+        SOLUTION_SECTION.style.display = 'none';
+        SOLUTION_NUMBERS.innerHTML = '';
+        
+        // Reset l'array di stato
+        currentDropState.fill(null);
+
+        const generatedNumbers = generateRandomNumbers(NUM_CARDS, MAX_NUMBER, MIN_NUMBER);
+        correctOrder = [...generatedNumbers].sort((a, b) => a - b);
+        
+        const shuffledNumbers = shuffleArray(generatedNumbers);
+        
+        shuffledNumbers.forEach(number => {
+            const card = createCard(number);
+            DRAGGABLE_CONTAINER.appendChild(card);
+        });
+
+        for (let i = 0; i < NUM_CARDS; i++) {
+            const zone = createDropZone(i);
+            DROP_ZONES_CONTAINER.appendChild(zone);
+        }
+
+        addDragAndDropListeners();
+    }
+
+    /* ------------------------------------------------ */
+    /* FUNZIONI DRAG AND DROP (Logica Tracciata) */
+    /* ------------------------------------------------ */
+
+    function addDragAndDropListeners() {
+        const cards = document.querySelectorAll('.card');
+        const dropZones = document.querySelectorAll('.drop-zone');
+        let draggedCard = null;
+        let originalParent = null;
+
+        cards.forEach(card => {
+            card.addEventListener('dragstart', (e) => {
+                draggedCard = card;
+                originalParent = card.parentNode; // Traccia il genitore originale
+                e.dataTransfer.setData('text/plain', card.getAttribute('data-number'));
+                
+                setTimeout(() => {
+                     card.style.opacity = '0.1'; 
+                     card.style.cursor = 'grabbing';
+                }, 0); 
+            });
+
+            card.addEventListener('dragend', (e) => {
+                // Se la carta è nel contenitore DRAGGABLE, ripristina la visibilità
+                if (draggedCard && draggedCard.parentNode === DRAGGABLE_CONTAINER) {
+                    draggedCard.style.opacity = '1';
+                    draggedCard.style.cursor = 'grab';
+                }
+            });
+        });
+
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('hovered');
+                e.dataTransfer.dropEffect = 'move';
+            });
+
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('hovered');
+            });
+
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('hovered');
+                
+                if (draggedCard) {
+                    const dropIndex = parseInt(zone.getAttribute('data-index'));
+                    const droppedNumber = parseInt(draggedCard.getAttribute('data-number'));
+                    const existingCard = zone.querySelector('.card'); 
+                    
+                    // --- GESTIONE SCAMBIO ---
+                    if (existingCard) {
+                        // Rimuovi la carta esistente dalla zona
+                        zone.removeChild(existingCard);
+                        
+                        // Spostala nel contenitore sorgente e ripristina il suo stato
+                        existingCard.setAttribute('draggable', true);
+                        existingCard.style.cursor = 'grab';
+                        existingCard.style.opacity = '1'; 
+                        DRAGGABLE_CONTAINER.appendChild(existingCard); 
+                        
+                        // Rimuovi il numero vecchio dallo stato in questo indice
+                        currentDropState[dropIndex] = null;
+                    }
+
+                    // --- POSIZIONAMENTO NUOVA CARTA ---
+                    
+                    // 1. Rimuovi la carta trascinata dal vecchio genitore (per sicurezza)
+                    if (draggedCard.parentNode) {
+                        draggedCard.parentNode.removeChild(draggedCard);
+                        
+                        // Se la carta veniva da una zona, resetta anche lo stato precedente
+                        if (originalParent.classList.contains('drop-zone')) {
+                            const oldIndex = parseInt(originalParent.getAttribute('data-index'));
+                            currentDropState[oldIndex] = null;
+                            originalParent.textContent = oldIndex + 1; // Ripristina il numero di zona
+                        }
+                    }
+
+                    // 2. Aggiungi la carta alla nuova zona
+                    zone.appendChild(draggedCard);
+                    
+                    // 3. AGGIORNA LO STATO: Questa è la chiave!
+                    currentDropState[dropIndex] = droppedNumber;
+                    
+                    // 4. Stili finali
+                    draggedCard.style.opacity = '1'; 
+                    draggedCard.style.cursor = 'default';
+                    draggedCard.setAttribute('draggable', false);
+                    zone.textContent = ''; // Nasconde il numero di zona
+
+                    RESULT_BOX.textContent = '';
+                    SOLUTION_SECTION.style.display = 'none';
+                    
+                    draggedCard = null;
+                }
+            });
+        });
+    }
+    
+    /* ------------------------------------------------ */
+    /* FUNZIONI DI CONTROLLO (Legge l'Array di Stato) */
+    /* ------------------------------------------------ */
+
+    function checkOrder() {
+        // Legge lo stato DIRETTO dall'array, bypassando il DOM.
+        const userOrder = currentDropState;
+
+        // 1. CONTROLLO CRITICO: Verifica che tutte le posizioni siano piene (non ci siano 'null')
+        if (userOrder.includes(null)) {
+            // Questo errore è ora generato solo se l'array di stato non è completo.
+            RESULT_BOX.innerHTML = "❌ Devi posizionare tutti i numeri prima di controllare!";
+            RESULT_BOX.className = 'result-box incorrect';
+            SOLUTION_SECTION.style.display = 'none';
+            return;
+        }
+
+        // 2. Controlla l'ordine effettivo
+        let isCorrect = userOrder.every((num, i) => num === correctOrder[i]);
+        
+        // 3. Visualizza la SOLUZIONE CORRETTA
+        const solutionHTML = correctOrder.map(num =>
+            `<span class="solution-number-card">${num}</span>`
+        ).join('');
+
+        SOLUTION_NUMBERS.innerHTML = solutionHTML;
+        SOLUTION_SECTION.style.display = 'block';
+        
+        // 4. Visualizza il risultato
+        if (isCorrect) {
+            RESULT_BOX.textContent = "🎉 Complimenti! I numeri sono nell'ordine corretto!";
+            RESULT_BOX.className = 'result-box correct';
+        } else {
+            RESULT_BOX.textContent = `❌ Ordine Sbagliato! Riprova.`;
+            RESULT_BOX.className = 'result-box incorrect';
+        }
+    }
+
+
+    // Carica il primo esercizio all'avvio della pagina
+    document.addEventListener('DOMContentLoaded', loadNewProblem);
+
+</script>
+
+</body>
+</html>
