@@ -30,7 +30,7 @@ Queste pagine offrono esercizi focalizzati sull'applicazione pratica della matem
 
 ### 2. Abaco Interattivo (Classe delle Migliaia)
 
-**File:** [migliaio.html](https://anna1704.github.io/matematica/migliaio.html)
+**File: [migliaio.html](https://anna1704.github.io/matematica/migliaio.html)**
 
 Questo strumento è dedicato ai numeri fino a 9.999. Permette di esercitarsi in due modalità chiave:
 
@@ -42,7 +42,7 @@ Questo strumento è dedicato ai numeri fino a 9.999. Permette di esercitarsi in 
 
 ### 3. Scomposizione Rapida (Entro il 999)
 
-**File:** [scomposizione.html](https://anna1704.github.io/matematica/scomposizione.html)
+**File: [scomposizione.html](https://anna1704.github.io/matematica/scomposizione.html)**
 
 Questa pagina allena la velocità e precisione nella scomposizione per numeri a tre cifre, fondamentale per la comprensione del sistema decimale.
 
@@ -50,7 +50,7 @@ Questa pagina allena la velocità e precisione nella scomposizione per numeri a 
 
 ### 4. Ordinamento e lettura di numeri (Entro il 9999)
 
-**File:** [ordinamento.html](https://anna1704.github.io/matematica/ordinamento.html), [associanumeri.html](https://anna1704.github.io/matematica/associanumeri.html)
+**File: [ordinamento.html](https://anna1704.github.io/matematica/ordinamento.html), [associanumeri.html](https://anna1704.github.io/matematica/associanumeri.html)**
 Queste pagine allenano alla lettura e all'ordinamento progressivo dei numeri entro il 9999 con attività di abbinamento attraverso il drag and drop.
 
 Questa pagina allena la velocità e precisione nella scomposizione per numeri a tre cifre, fondamentale per la comprensione del sistema decimale.
