@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Tre Supereroi Nutrienti</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .hero-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .hero-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .food-grid {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .food-grid.active {
+            display: grid;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .food-item {
+            transition: transform 0.2s ease;
+        }
+        .food-item:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-purple-100 min-h-full">
+    <main class="container mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-purple-800 mb-4">🦸‍♂️ I Tre Supereroi Nutrienti 🦸‍♀️</h1>
+            <p class="text-lg text-gray-700">Clicca sui supereroi per scoprire i loro supercibi!</p>
+        </header>
+
+        <!-- Carte dei Supereroi -->
+        <section class="grid md:grid-cols-3 gap-6 mb-8">
+            <!-- Capitan Carboidrato -->
+            <div class="hero-card bg-yellow-400 rounded-xl p-6 text-center shadow-lg" onclick="showFoods('carboidrati')">
+                <div class="text-6xl mb-4">⚡</div>
+                <h2 class="text-2xl font-bold text-yellow-900 mb-2">Capitan Carboidrato</h2>
+                <p class="text-yellow-800 font-medium">Energia per correre e giocare!</p>
+                <div class="mt-4 bg-yellow-300 rounded-lg p-2">
+                    <span class="text-yellow-900 font-bold">💪 ENERGIA PURA!</span>
+                </div>
+            </div>
+
+            <!-- Professor Proteina -->
+            <div class="hero-card bg-red-400 rounded-xl p-6 text-center shadow-lg" onclick="showFoods('proteine')">
+                <div class="text-6xl mb-4">🏋️‍♂️</div>
+                <h2 class="text-2xl font-bold text-red-900 mb-2">Professor Proteina</h2>
+                <p class="text-red-800 font-medium">Muscoli forti per costruire e riparare!</p>
+                <div class="mt-4 bg-red-300 rounded-lg p-2">
+                    <span class="text-red-900 font-bold">💪 FORZA MUSCOLARE!</span>
+                </div>
+            </div>
+
+            <!-- Wonder Vitamina -->
+            <div class="hero-card bg-green-400 rounded-xl p-6 text-center shadow-lg" onclick="showFoods('vitamine')">
+                <div class="text-6xl mb-4">🛡️</div>
+                <h2 class="text-2xl font-bold text-green-900 mb-2">Wonder Vitamina</h2>
+                <p class="text-green-800 font-medium">Scudo per difenderci dai malanni!</p>
+                <div class="mt-4 bg-green-300 rounded-lg p-2">
+                    <span class="text-green-900 font-bold">🛡️ DIFESA TOTALE!</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione Cibi -->
+        <section id="foods-section" class="bg-white rounded-xl p-6 shadow-lg">
+            <div id="foods-title" class="text-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-600">👆 Clicca su un supereroe per vedere i suoi supercibi!</h3>
+            </div>
+
+            <!-- Cibi Carboidrati -->
+            <div id="carboidrati-foods" class="food-grid grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="food-item bg-yellow-50 rounded-lg p-4 text-center border-2 border-yellow-200">
+                    <div class="text-4xl mb-2">🍞</div>
+                    <p class="font-semibold text-yellow-800">Pane</p>
+                </div>
+                <div class="food-item bg-yellow-50 rounded-lg p-4 text-center border-2 border-yellow-200">
+                    <div class="text-4xl mb-2">🍝</div>
+                    <p class="font-semibold text-yellow-800">Pasta</p>
+                </div>
+                <div class="food-item bg-yellow-50 rounded-lg p-4 text-center border-2 border-yellow-200">
+                    <div class="text-4xl mb-2">🍚</div>
+                    <p class="font-semibold text-yellow-800">Riso</p>
+                </div>
+                <div class="food-item bg-yellow-50 rounded-lg p-4 text-center border-2 border-yellow-200">
+                    <div class="text-4xl mb-2">🥔</div>
+                    <p class="font-semibold text-yellow-800">Patate</p>
+                </div>
+                <div class="food-item bg-yellow-50 rounded-lg p-4 text-center border-2 border-yellow-200">
+                    <div class="text-4xl mb-2">🍌</div>
+                    <p class="font-semibold text-yellow-800">Banane</p>
+                </div>
+                <div class="food-item bg-yellow-50 rounded-lg p-4 text-center border-2 border-yellow-200">
+                    <div class="text-4xl mb-2">🥖</div>
+                    <p class="font-semibold text-yellow-800">Cereali</p>
+                </div>
+                <div class="food-item bg-yellow-50 rounded-lg p-4 text-center border-2 border-yellow-200">
+                    <div class="text-4xl mb-2">🍯</div>
+                    <p class="font-semibold text-yellow-800">Miele</p>
+                </div>
+                <div class="food-item bg-yellow-50 rounded-lg p-4 text-center border-2 border-yellow-200">
+                    <div class="text-4xl mb-2">🍪</div>
+                    <p class="font-semibold text-yellow-800">Biscotti</p>
+                </div>
+            </div>
+
+            <!-- Cibi Proteine -->
+            <div id="proteine-foods" class="food-grid grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="food-item bg-red-50 rounded-lg p-4 text-center border-2 border-red-200">
+                    <div class="text-4xl mb-2">🍖</div>
+                    <p class="font-semibold text-red-800">Carne</p>
+                </div>
+                <div class="food-item bg-red-50 rounded-lg p-4 text-center border-2 border-red-200">
+                    <div class="text-4xl mb-2">🐟</div>
+                    <p class="font-semibold text-red-800">Pesce</p>
+                </div>
+                <div class="food-item bg-red-50 rounded-lg p-4 text-center border-2 border-red-200">
+                    <div class="text-4xl mb-2">🥚</div>
+                    <p class="font-semibold text-red-800">Uova</p>
+                </div>
+                <div class="food-item bg-red-50 rounded-lg p-4 text-center border-2 border-red-200">
+                    <div class="text-4xl mb-2">🧀</div>
+                    <p class="font-semibold text-red-800">Formaggio</p>
+                </div>
+                <div class="food-item bg-red-50 rounded-lg p-4 text-center border-2 border-red-200">
+                    <div class="text-4xl mb-2">🥛</div>
+                    <p class="font-semibold text-red-800">Latte</p>
+                </div>
+                <div class="food-item bg-red-50 rounded-lg p-4 text-center border-2 border-red-200">
+                    <div class="text-4xl mb-2">🫘</div>
+                    <p class="font-semibold text-red-800">Legumi</p>
+                </div>
+                <div class="food-item bg-red-50 rounded-lg p-4 text-center border-2 border-red-200">
+                    <div class="text-4xl mb-2">🥜</div>
+                    <p class="font-semibold text-red-800">Noci</p>
+                </div>
+                <div class="food-item bg-red-50 rounded-lg p-4 text-center border-2 border-red-200">
+                    <div class="text-4xl mb-2">🍗</div>
+                    <p class="font-semibold text-red-800">Pollo</p>
+                </div>
+            </div>
+
+            <!-- Cibi Vitamine -->
+            <div id="vitamine-foods" class="food-grid grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="food-item bg-green-50 rounded-lg p-4 text-center border-2 border-green-200">
+                    <div class="text-4xl mb-2">🍎</div>
+                    <p class="font-semibold text-green-800">Mele</p>
+                </div>
+                <div class="food-item bg-green-50 rounded-lg p-4 text-center border-2 border-green-200">
+                    <div class="text-4xl mb-2">🍊</div>
+                    <p class="font-semibold text-green-800">Arance</p>
+                </div>
+                <div class="food-item bg-green-50 rounded-lg p-4 text-center border-2 border-green-200">
+                    <div class="text-4xl mb-2">🥕</div>
+                    <p class="font-semibold text-green-800">Carote</p>
+                </div>
+                <div class="food-item bg-green-50 rounded-lg p-4 text-center border-2 border-green-200">
+                    <div class="text-4xl mb-2">🥬</div>
+                    <p class="font-semibold text-green-800">Spinaci</p>
+                </div>
+                <div class="food-item bg-green-50 rounded-lg p-4 text-center border-2 border-green-200">
+                    <div class="text-4xl mb-2">🍓</div>
+                    <p class="font-semibold text-green-800">Fragole</p>
+                </div>
+                <div class="food-item bg-green-50 rounded-lg p-4 text-center border-2 border-green-200">
+                    <div class="text-4xl mb-2">🥦</div>
+                    <p class="font-semibold text-green-800">Broccoli</p>
+                </div>
+                <div class="food-item bg-green-50 rounded-lg p-4 text-center border-2 border-green-200">
+                    <div class="text-4xl mb-2">🍇</div>
+                    <p class="font-semibold text-green-800">Uva</p>
+                </div>
+                <div class="food-item bg-green-50 rounded-lg p-4 text-center border-2 border-green-200">
+                    <div class="text-4xl mb-2">🫐</div>
+                    <p class="font-semibold text-green-800">Mirtilli</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pulsante Reset -->
+        <div class="text-center mt-6">
+            <button onclick="resetView()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors">
+                🔄 Torna ai Supereroi
+            </button>
+        </div>
+    </main>
+
+    <script>
+        function showFoods(nutrientType) {
+            // Nascondi tutti i gruppi di cibi
+            const allFoodGrids = document.querySelectorAll('.food-grid');
+            allFoodGrids.forEach(grid => grid.classList.remove('active'));
+            
+            // Mostra il gruppo selezionato
+            const selectedGrid = document.getElementById(nutrientType + '-foods');
+            selectedGrid.classList.add('active');
+            
+            // Aggiorna il titolo
+            const title = document.getElementById('foods-title');
+            let heroName = '';
+            let heroEmoji = '';
+            let heroColor = '';
+            
+            switch(nutrientType) {
+                case 'carboidrati':
+                    heroName = 'Capitan Carboidrato';
+                    heroEmoji = '⚡';
+                    heroColor = 'text-yellow-600';
+                    break;
+                case 'proteine':
+                    heroName = 'Professor Proteina';
+                    heroEmoji = '🏋️‍♂️';
+                    heroColor = 'text-red-600';
+                    break;
+                case 'vitamine':
+                    heroName = 'Wonder Vitamina';
+                    heroEmoji = '🛡️';
+                    heroColor = 'text-green-600';
+                    break;
+            }
+            
+            title.innerHTML = `<h3 class="text-2xl font-bold ${heroColor}">${heroEmoji} I Supercibi di ${heroName}! ${heroEmoji}</h3>`;
+        }
+        
+        function resetView() {
+            // Nascondi tutti i gruppi di cibi
+            const allFoodGrids = document.querySelectorAll('.food-grid');
+            allFoodGrids.forEach(grid => grid.classList.remove('active'));
+            
+            // Ripristina il titolo originale
+            const title = document.getElementById('foods-title');
+            title.innerHTML = '<h3 class="text-2xl font-bold text-gray-600">👆 Clicca su un supereroe per vedere i suoi supercibi!</h3>';
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99491faa77500f52',t:'MTc2MTQ3MzAwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+
