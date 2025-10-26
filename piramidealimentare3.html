@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piramide Alimentare a Semaforo</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f8ff 0%, #e8f5e8 100%);
+            min-height: 100%;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2d5016;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            color: #555;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .pyramid {
+            position: relative;
+            margin: 40px auto;
+            width: 700px;
+            height: 400px;
+        }
+
+        .level {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 4px solid #fff;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            font-size: 16px;
+            text-align: center;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .level:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .green-level {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 120px;
+            background: linear-gradient(45deg, #228B22, #32CD32, #90EE90);
+        }
+
+        .yellow-level {
+            bottom: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 100px;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFFF99);
+        }
+
+        .red-level {
+            bottom: 260px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 80px;
+            background: linear-gradient(45deg, #DC143C, #FF6347, #FF69B4);
+        }
+
+        .info-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 700px;
+            min-height: 200px;
+            border-left: 8px solid #4CAF50;
+        }
+
+        .info-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .info-content {
+            color: #555;
+            line-height: 1.8;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+
+        .frequency {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-weight: bold;
+            border-left: 4px solid #2196F3;
+        }
+
+        .food-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .food-item {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 4px solid #4CAF50;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .green-border { border-left-color: #4CAF50; }
+        .yellow-border { border-left-color: #FFA500; }
+        .red-border { border-left-color: #DC143C; }
+
+        .green-title { color: #228B22; }
+        .yellow-title { color: #FF8C00; }
+        .red-title { color: #DC143C; }
+
+        .instruction {
+            background: linear-gradient(135deg, #e8f5e8, #f0f8ff);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            color: #2d5016;
+            font-weight: 500;
+            border: 2px solid #4CAF50;
+        }
+
+        .traffic-light {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 10px;
+        }
+
+        .light {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #333;
+        }
+
+        .green-light { background: #32CD32; }
+        .yellow-light { background: #FFD700; }
+        .red-light { background: #DC143C; }
+
+        @media (max-width: 768px) {
+            .pyramid {
+                width: 500px;
+                height: 300px;
+            }
+
+            .green-level { width: 450px; height: 90px; }
+            .yellow-level { width: 300px; height: 75px; bottom: 105px; }
+            .red-level { width: 150px; height: 60px; bottom: 195px; }
+
+            .level {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .food-examples {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚦 Piramide Alimentare a Semaforo</h1>
+        <div class="subtitle">Sistema di classificazione nutrizionale per scelte alimentari consapevoli</div>
+        
+        <div class="instruction">
+            <strong>🎯 Come funziona:</strong> Clicca sui livelli colorati per scoprire quali cibi appartengono a ogni categoria. 
+            Verde = Consuma liberamente • Giallo = Con moderazione • Rosso = Raramente e in piccole quantità
+        </div>
+
+        <div class="pyramid">
+            <div class="level red-level" onclick="showInfo('rosso')">
+                🚫 ZONA ROSSA<br>
+                <small>Consumo occasionale</small>
+                <div class="traffic-light">
+                    <div class="light red-light"></div>
+                </div>
+            </div>
+            <div class="level yellow-level" onclick="showInfo('giallo')">
+                ⚠️ ZONA GIALLA<br>
+                <small>Consumo moderato</small>
+                <div class="traffic-light">
+                    <div class="light yellow-light"></div>
+                </div>
+            </div>
+            <div class="level green-level" onclick="showInfo('verde')">
+                ✅ ZONA VERDE<br>
+                <small>Consumo libero e quotidiano</small>
+                <div class="traffic-light">
+                    <div class="light green-light"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel" id="info-panel">
+            <div class="info-title">
+                🌟 Benvenuto nella Piramide a Semaforo!
+            </div>
+            <div class="info-content">
+                Questa piramide utilizza il sistema del semaforo per classificare gli alimenti in base al loro valore nutrizionale e alla frequenza di consumo consigliata.
+                
+                <div class="frequency">
+                    <strong>🎯 Obiettivo:</strong> Aiutarti a fare scelte alimentari più consapevoli per una dieta equilibrata e salutare.
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <strong>Clicca su una zona colorata per iniziare l'esplorazione! 👆</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const nutritionInfo = {
+            'verde': {
+                title: '🟢 ZONA VERDE - Cibi Sani e Nutrienti',
+                titleClass: 'green-title',
+                borderClass: 'green-border',
+                content: 'Questi alimenti sono ricchi di nutrienti essenziali e possono essere consumati liberamente ogni giorno. Formano la base di una dieta sana ed equilibrata.',
+                frequency: 'Frequenza: Consumo quotidiano e libero - Più ne mangi, meglio è!',
+                foods: [
+                    '🥬 Verdure a foglia verde (spinaci, lattuga, rucola)',
+                    '🥦 Verdure crucifere (broccoli, cavolfiori, cavoli)',
+                    '🍎 Frutta fresca di stagione (mele, pere, agrumi)',
+                    '🫐 Frutti di bosco (mirtilli, lamponi, more)',
+                    '🐟 Pesce azzurro (salmone, sardine, sgombro)',
+                    '🥜 Frutta secca non salata (noci, mandorle)',
+                    '🫒 Olio extravergine di oliva',
+                    '🌾 Cereali integrali (avena, quinoa, riso integrale)',
+                    '🫘 Legumi (fagioli, lenticchie, ceci)',
+                    '💧 Acqua naturale (almeno 8 bicchieri al giorno)'
+                ]
+            },
+            'giallo': {
+                title: '🟡 ZONA GIALLA - Consumo Moderato',
+                titleClass: 'yellow-title',
+                borderClass: 'yellow-border',
+                content: 'Alimenti che possono far parte di una dieta equilibrata ma vanno consumati con moderazione. Contengono nutrienti utili ma anche elementi da limitare.',
+                frequency: 'Frequenza: 2-3 volte a settimana - Porzioni controllate',
+                foods: [
+                    '🍞 Pane bianco e prodotti da forno raffinati',
+                    '🍝 Pasta non integrale',
+                    '🥩 Carne rossa magra (manzo, maiale)',
+                    '🧀 Formaggi stagionati',
+                    '🥚 Uova (massimo 4-5 a settimana)',
+                    '🍯 Miele e sciroppi naturali',
+                    '🥔 Patate (meglio se bollite o al vapore)',
+                    '🍌 Frutta molto zuccherina (banane, uva, fichi)',
+                    '🥛 Latte intero e yogurt zuccherati',
+                    '☕ Caffè e tè (con moderazione)'
+                ]
+            },
+            'rosso': {
+                title: '🔴 ZONA ROSSA - Consumo Occasionale',
+                titleClass: 'red-title',
+                borderClass: 'red-border',
+                content: 'Alimenti da consumare raramente e in piccole quantità. Sono spesso ricchi di zuccheri, grassi saturi, sale o additivi che possono essere dannosi se consumati regolarmente.',
+                frequency: 'Frequenza: Massimo 1 volta a settimana - Porzioni molto piccole',
+                foods: [
+                    '🍰 Dolci, torte e pasticcini',
+                    '🍭 Caramelle e cioccolatini',
+                    '🥤 Bevande zuccherate e gassate',
+                    '🍟 Patatine fritte e snack salati',
+                    '🌭 Insaccati e carni processate',
+                    '🍕 Pizza (soprattutto quella industriale)',
+                    '🍔 Fast food e cibi fritti',
+                    '🧈 Burro, margarine e grassi idrogenati',
+                    '🍺 Alcolici (vino, birra, superalcolici)',
+                    '🥓 Bacon e carni molto grasse'
+                ]
+            }
+        };
+
+        function showInfo(zone) {
+            const panel = document.getElementById('info-panel');
+            const info = nutritionInfo[zone];
+            
+            const foodsHtml = info.foods.map(food => 
+                `<div class="food-item ${info.borderClass}">${food}</div>`
+            ).join('');
+            
+            panel.innerHTML = `
+                <div class="info-title ${info.titleClass}">
+                    ${info.title}
+                </div>
+                <div class="info-content">
+                    ${info.content}
+                    <div class="frequency ${info.borderClass}">
+                        📅 ${info.frequency}
+                    </div>
+                    <div class="food-examples">
+                        ${foodsHtml}
+                    </div>
+                </div>
+            `;
+            
+            // Animazione di evidenziazione
+            panel.style.transform = 'scale(0.95)';
+            panel.style.transition = 'transform 0.3s ease';
+            setTimeout(() => {
+                panel.style.transform = 'scale(1)';
+            }, 150);
+            
+            // Cambia il colore del bordo sinistro del pannello
+            const borderColors = {
+                'verde': '#4CAF50',
+                'giallo': '#FFA500',
+                'rosso': '#DC143C'
+            };
+            panel.style.borderLeftColor = borderColors[zone];
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9938933bc36c3a89',t:'MTc2MTI5OTQ4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+
