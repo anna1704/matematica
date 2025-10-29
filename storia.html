@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Avventura dei Supereroi Nutrienti!</title>
+    <style>
+        body {
+            font-family: "Arial", cursive, sans-serif; /* Font leggibile */
+            background-color: #e6ffe6; /* Sfondo verde chiaro */
+            color: #333;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+        }
+
+        .story-container {
+            background-color: #ffffff; /* Sfondo bianco per la storia */
+            border: 5px solid #ffcc00; /* Bordo giallo brillante */
+            border-radius: 20px;
+            padding: 30px 40px;
+            max-width: 800px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden; /* Per le decorazioni */
+        }
+
+        h1 {
+            color: #ff6f00; /* Arancione vivace */
+            font-size: 2.8em;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 0px #ffe082; /* Ombra per il titolo */
+        }
+
+        h2 {
+            color: #4CAF50; /* Verde per i sottotitoli */
+            font-size: 1.8em;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .hero-intro {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            padding: 15px;
+            background-color: #f0f8ff; /* Azzurro chiaro */
+            border-left: 8px solid #007bff; /* Bordo blu */
+            border-radius: 10px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .hero-intro.carboidrato { border-left-color: #dc3545; background-color: #fff0f0; } /* Rosso per Carboidrato */
+        .hero-intro.proteina { border-left-color: #ffc107; background-color: #fffbe6; } /* Giallo per Proteina */
+        .hero-intro.vitamina { border-left-color: #28a745; background-color: #f0fff0; } /* Verde per Vitamina */
+
+
+        .hero-intro img {
+            width: 120px; /* Dimensione delle immagini degli eroi */
+            height: auto;
+            margin-right: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            flex-shrink: 0; /* Impedisce all'immagine di ridursi */
+        }
+        
+        .hero-intro p {
+            margin: 0;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .villain-intro {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8d7da; /* Rosso tenue per il cattivo */
+            border: 3px dashed #dc3545; /* Bordo rosso tratteggiato */
+            border-radius: 10px;
+        }
+
+        .villain-intro p {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #721c24;
+        }
+        
+        .action-image {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .action-image img {
+            max-width: 90%;
+            height: auto;
+            border: 4px solid #007bff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Piccole decorazioni per il fondo pagina */
+        .bottom-decoration {
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 150px;
+            height: 150px;
+            background-color: #ffd700;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+        .bottom-decoration.right {
+            right: -50px;
+            left: auto;
+            background-color: #90ee90;
+        }
+        
+        /* Stile per i nomi dei supereroi nel testo */
+        strong.superhero-name {
+            color: #007bff; /* Blu per i nomi dei supereroi */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="story-container">
+        <h1>L'AVVENTURA DEI SUPEREROI NUTRIENTI CONTRO IL MOSTRO PIGRIZIA</h1>
+
+        <p>Nel colorato mondo di CiboSano, dove i broccoli sorridevano e le fragole cantavano, vivevano tre supereroi speciali. Erano i guardiani della salute, e il loro compito era assicurarsi che tutti i bambini avessero l'energia e la forza per giocare e imparare.</p>
+
+        <div class="hero-intro carboidrato">
+            <img src="https://i.ibb.co/Y7dfkTVD/capitancarbo.png" alt="Capitan Carboidrato">
+            <p>C'era <strong class="superhero-name">Capitan Carboidrato</strong>, una patata robusta e sorridente, con un mantello rosso che svolazzava al vento e un fulmine sul petto. La sua super forza era l'<strong>energia</strong>! Quando i bambini si sentivano stanchi, lui arrivava al galoppo con pane, pasta e riso, ricaricandoli in un lampo.</p>
+        </div>
+
+        <div class="hero-intro proteina">
+            <img src="https://i.ibb.co/wN6Y5DYx/profprot.png" alt="Professor Proteina">
+            <p>Poi c'era il <strong class="superhero-name">Professor Proteina</strong>, un uovo saggio e geniale, sempre con il suo camice bianco e un libro sotto il braccio. Era il costruttore del team: con la sua intelligenza aiutava i muscoli a crescere forti e riparava tutto ciò che si rompeva, come quando un bambino si sbucciava il ginocchio. Le sue armi segrete erano carne, pesce, uova e latte!</p>
+        </div>
+
+        <div class="hero-intro vitamina">
+            <img src="https://i.ibb.co/27f7msRD/wondervit.png" alt="Wonder Vitamina">
+            <p>E infine, la velocissima <strong class="superhero-name">Wonder Vitamina</strong>, un'arancia scintillante con capelli verdi e uno scudo brillante a forma di C+. Lei era l'imbattibile scudo difensivo! Combatteva i raffreddori, faceva brillare la pelle e gli occhi e rendeva i bambini immuni ai piccoli mostri della malattia. Frutta e verdura erano le sue migliori amiche.</p>
+        </div>
+
+        <p>Un mattino, il sole non riusciva a brillare. Un'ombra grigia e appiccicosa si stava allungando su CiboSano. Era il **Mostro Pigrizia**! Questo mostro puzzolente rubava l'energia ai bambini, rendendoli lenti e svogliati. I parchi erano vuoti, i giocattoli abbandonati, e persino i giochi più divertenti sembravano noiosi.</p>
+
+        <div class="villain-intro">
+            <p>"Oh no!" esclamò Capitan Carboidrato, sentendo la stanchezza arrivare anche a lui. "Dobbiamo agire subito!"</p>
+            <p>"Analisi completata!" disse il Professor Proteina, consultando il suo libro speciale. "Il Mostro Pigrizia si nutre di zuccheri veloci e mancanza di attività. La sua debolezza è l'energia duratura e la forza fisica!"</p>
+            <p>"E io lo accecherò con la mia vitalità!" aggiunse Wonder Vitamina, stringendo il suo scudo.</p>
+        </div>
+
+        <p>I tre supereroi si precipitarono verso la città. Videro i bambini seduti, senza voglia di fare nulla, con gli occhi spenti.</p>
+
+        <p>"Al mio segnale!" gridò Capitan Carboidrato.</p>
+
+        <p>Per prima cosa, Capitan Carboidrato si lanciò in picchiata, atterrando con un balzo accanto a un gruppo di bambini. Dal suo zaino magico fece uscire del pane integrale e della pasta al sugo! "Mangiate questi, amici! Vi daranno l'energia per ricominciare a giocare!" L'ombra grigia del Mostro Pigrizia si ritirò un pochino.</p>
+
+        <p>Poi fu il turno del Professor Proteina. Con un salto elegante, atterrò vicino a un ragazzino che si sentiva troppo debole per calciare il pallone. "Prendi, campione!" disse il Professore, porgendogli un bicchiere di latte e un pezzo di pollo. "Queste proteine ripareranno i tuoi muscoli e ti daranno la forza per correre più veloce del vento!" Il Mostro Pigrizia gemette, perdendo ancora un po' del suo potere.</p>
+
+        <p>Ma il Mostro Pigrizia era ancora lì, grande e minaccioso. "Non mi fermerete!" ruggì, cercando di avvolgere i bambini con la sua coltre grigia.</p>
+
+        <p>"Non se Wonder Vitamina ha qualcosa da dire in proposito!" squillò la voce dell'eroina arancione. Con la velocità della luce, Wonder Vitamina sfrecciò tra i bambini, lasciando dietro di sé una scia di frutta e verdura colorata: mele croccanti, carote dolci, grappoli d'uva succosi e broccoli verdi! "Mangiate le vostre vitamine, piccoli campioni! Vi renderanno invincibili contro i mostri e vi faranno brillare di salute!"</p>
+
+        <div class="action-image">
+            <img src="https://i.ibb.co/4wzxB0pB/eroi.pngg" alt="Supereroi Nutrienti in azione">
+            <p>I bambini, incoraggiati dai supereroi e sentendo una nuova energia, iniziarono a sgranocchiare la frutta e la verdura. I loro occhi si illuminarono, le loro voci si alzarono, e la voglia di giocare tornò più forte che mai! Iniziarono a ridere, a correre, a saltare!</p>
+        </div>
+
+        <p>Il Mostro Pigrizia, colpito dall'energia dei carboidrati, dalla forza delle proteine e dalla vitalità delle vitamine, non poté più resistere. La sua ombra grigia si ritirò, si rimpicciolì, e con un lamento si dissolse nell'aria, sconfitto dalle risate e dall'energia dei bambini.</p>
+
+        <p>Il sole tornò a splendere più luminoso che mai su CiboSano. I parchi si riempirono di gioia, e i Supereroi Nutrienti sorrisero, sapendo che i bambini erano di nuovo sani e felici.</p>
+
+        <p>"Ricordate, piccoli amici!" disse <strong class="superhero-name">Capitan Carboidrato</strong>.</p>
+        <p>"Mangiate bene," aggiunse il <strong class="superhero-name">Professor Proteina</strong>.</p>
+        <p>"E sarete sempre invincibili!" concluse <strong class="superhero-name">Wonder Vitamina</strong>.</p>
+
+        <p>E così, i tre supereroi continuarono a vegliare su CiboSano, pronti a intervenire ogni volta che un bambino avesse avuto bisogno della loro speciale energia, forza e vitalità!</p>
+
+        <div class="bottom-decoration"></div>
+        <div class="bottom-decoration right"></div>
+    </div>
+
+</body>
+</html>
