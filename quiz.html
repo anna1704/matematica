@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interattivo: Cibo Sano e Nutrienti</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .quiz-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba[0](0, 0, 0, 0.1);
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .question-box {
+            margin-bottom: 25px;
+        }
+
+        .question-number {
+            font-size: 1.1em;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .option-button {
+            background-color: #e0e0e0;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 12px 18px;
+            font-size: 1.1em;
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s, transform 0.1s;
+        }
+
+        .option-button:hover {
+            background-color: #d5d5d5;
+            border-color: #b0b0b0;
+            transform: translateY(-2px);
+        }
+
+        .option-button.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .option-button.incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            min-height: 30px; /* Per evitare salti di layout */
+        }
+
+        .feedback.correct {
+            color: #28a745;
+        }
+
+        .feedback.incorrect {
+            color: #dc3545;
+        }
+        
+        .rationale {
+            font-size: 0.95em;
+            color: #555;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-left: 4px solid #4CAF50;
+            text-align: left;
+            border-radius: 4px;
+        }
+
+        .navigation-buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .navigation-buttons button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #0056b3;
+        }
+        
+        .navigation-buttons button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        #quiz-results {
+            margin-top: 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Quiz Interattivo: Cibo Sano e Nutrienti</h1>
+
+    <div class="quiz-container">
+        <div id="question-area">
+            </div>
+
+        <div id="quiz-results" style="display: none;">
+            </div>
+
+        <div class="navigation-buttons">
+            <button id="prev-button" onclick="showPreviousQuestion()" disabled>Precedente</button>
+            <button id="next-button" onclick="showNextQuestion()">Successiva</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                "questionNumber": 1,
+                "question": "Quale articolo determinativo (maschile singolare) manca? ... PANE è nella fascia gialla.",
+                "answerOptions": [
+                    { "text": "Il", "rationale": "La parola 'Pane' è maschile singolare e inizia con una consonante semplice (P).", "isCorrect": true },
+                    { "text": "Lo", "rationale": "'Lo' si usa davanti a parole maschili che iniziano con s+consonante, z, y, x, gn, ps.", "isCorrect": false },
+                    { "text": "L'", "rationale": "'L'' si usa davanti a parole maschili o femminili che iniziano con una vocale.", "isCorrect": false },
+                    { "text": "La", "rationale": "'La' è un articolo femminile. 'Pane' è una parola maschile (il pane).", "isCorrect": false }
+                ],
+                "hint": "Chiediti se 'Pane' è maschile o femminile e con quale lettera inizia."
+            },
+            {
+                "questionNumber": 2,
+                "question": "Quale articolo plurale manca? ... ORTAGGI sono nella fascia verde.",
+                "answerOptions": [
+                    { "text": "I", "rationale": "'I' si usa per il plurale maschile, ma solo se la parola inizia con consonante.", "isCorrect": false },
+                    { "text": "Le", "rationale": "'Le' è un articolo plurale femminile, ma 'Ortaggi' è maschile plurale.", "isCorrect": false },
+                    { "text": "Gli", "rationale": "'Gli' si usa per il plurale maschile quando la parola inizia con vocale (O) o con s+consonante, z, y, ecc.", "isCorrect": true },
+                    { "text": "Li", "rationale": "'Li' è un pronome (es. 'Li vedo'), non un articolo per questa frase.", "isCorrect": false }
+                ],
+                "hint": "'Ortaggi' è una parola maschile plurale che inizia con una vocale."
+            },
+            {
+                "questionNumber": 3,
+                "question": "Qual è il plurale corretto della parola 'UOVO'?",
+                "answerOptions": [
+                    { "text": "Uovi", "rationale": "Anche se 'Uovo' è maschile singolare, il plurale non si forma aggiungendo 'i'.", "isCorrect": false },
+                    { "text": "Uova", "rationale": "Questa parola ha un plurale irregolare che cambia genere: l'uovo (maschile) diventa le uova (femminile).", "isCorrect": true },
+                    { "text": "Uove", "rationale": "Questa forma non è corretta per il plurale di 'uovo'.", "isCorrect": false },
+                    { "text": "Le Uovo", "rationale": "Questa forma non cambia la parola 'Uovo' al plurale, il che non è corretto.", "isCorrect": false }
+                ],
+                "hint": "È un plurale speciale (irregolare) che cambia anche l'articolo da 'L'' (l'uovo) a 'LE'."
+            },
+            {
+                "questionNumber": 4,
+                "question": "'Capitan Carboidrato' dà energia e si trova principalmente...",
+                "answerOptions": [
+                    { "text": "...nel PESCE.", "rationale": "Il pesce è una fonte principale di 'Professor Proteina'.", "isCorrect": false },
+                    { "text": "...nell'ACQUA.", "rationale": "L'acqua è fondamentale per l'idratazione, ma non contiene carboidrati.", "isCorrect": false },
+                    { "text": "...nella FRUTTA.", "rationale": "La frutta contiene zuccheri (carboidrati semplici) e 'Wonder Vitamina', ma la fonte principale di energia complessa è un'altra.", "isCorrect": false },
+                    { "text": "...nel PANE e nella PASTA.", "rationale": "Pane, pasta e riso sono la base della piramide e la fonte principale di carboidrati complessi.", "isCorrect": true }
+                ],
+                "hint": "Pensa alla base della piramide alimentare, la nostra 'benzina'."
+            },
+            {
+                "questionNumber": 5,
+                "question": "'Professor Proteina' costruisce i muscoli e si trova...",
+                "answerOptions": [
+                    { "text": "...nella CARNE e nelle UOVA.", "rationale": "Carne, pesce, uova e latte sono le fonti principali di proteine.", "isCorrect": true },
+                    { "text": "...nell'OLIO.", "rationale": "L'olio è una fonte di grassi sani, non di proteine.", "isCorrect": false },
+                    { "text": "...nella BIBITA.", "rationale": "Le bibite contengono principalmente zuccheri (carboidrati) e si trovano nella fascia rossa.", "isCorrect": false },
+                    { "text": "...negli ORTAGGI.", "rationale": "Gli ortaggi sono la fonte principale di 'Wonder Vitamina' e fibre.", "isCorrect": false }
+                ],
+                "hint": "Questi alimenti si trovano nella fascia Gialla (Rallenta!) della nostra piramide."
+            },
+            {
+                "questionNumber": 6,
+                "question": "Quale parola NON è un alimento della fascia VERDE (Vai!)?",
+                "answerOptions": [
+                    { "text": "Riso", "rationale": "Il Riso è alla base della piramide, nella fascia verde.", "isCorrect": false },
+                    { "text": "Frutta", "rationale": "La Frutta è un alimento fondamentale della fascia verde.", "isCorrect": false },
+                    { "text": "Dolci", "rationale": "I Dolci si trovano in cima alla piramide, nella fascia Rossa (Stop!).", "isCorrect": true },
+                    { "text": "Olio", "rationale": "L'Olio (d'oliva) è considerato un grasso sano da usare quotidianamente (fascia verde).", "isCorrect": false }
+                ],
+                "hint": "Cerca l'intruso, l'alimento che appartiene alla fascia Rossa."
+            },
+            {
+                "questionNumber": 7,
+                "question": "Quale parola NON è un alimento della fascia ROSSA (Stop!)?",
+                "answerOptions": [
+                    { "text": "Fritti", "rationale": "I Fritti sono alimenti da consumare occasionalmente (fascia rossa).", "isCorrect": false },
+                    { "text": "Pesce", "rationale": "Il Pesce è una proteina sana della fascia Gialla (Rallenta!).", "isCorrect": true },
+                    { "text": "Bibita", "rationale": "Le Bibite zuccherate sono in cima alla piramide (fascia rossa).", "isCorrect": false },
+                    { "text": "Dolci", "rationale": "I Dolci sono alimenti da consumare occasionalmente (fascia rossa).", "isCorrect": false }
+                ],
+                "hint": "Cerca l'intruso, l'alimento che appartiene alla fascia Gialla."
+            },
+            {
+                "questionNumber": 8,
+                "question": "Scegli l'articolo indeterminativo corretto: 'Mangio ... FRUTTO'.",
+                "answerOptions": [
+                    { "text": "uno", "rationale": "'Uno' si usa davanti a parole maschili che iniziano con s+consonante, z, y, ecc.", "isCorrect": false },
+                    { "text": "un", "rationale": "'Un' è l'articolo indeterminativo maschile corretto per parole che iniziano con consonante semplice (F).", "isCorrect": true },
+                    { "text": "un'", "rationale": "'Un'' si usa davanti a parole femminili o maschili che iniziano con vocale.", "isCorrect": false },
+                    { "text": "una", "rationale": "'Una' è un articolo femminile. 'Frutto' è una parola maschile.", "isCorrect": false }
+                ],
+                "hint": "'Frutto' è una parola maschile che inizia con la lettera F."
+            },
+            {
+                "questionNumber": 9,
+                "question": "Completa la frase: 'Wonder Vitamina' aiuta a stare bene e si trova negli ORTAGGI e nella ...",
+                "answerOptions": [
+                    { "text": "FRUTTA", "rationale": "Frutta e ortaggi sono le fonti principali di vitamine.", "isCorrect": true },
+                    { "text": "BURRO", "rationale": "Il burro è una fonte di grassi (fascia gialla).", "isCorrect": false },
+                    { "text": "PASTA", "rationale": "La pasta è una fonte di carboidrati.", "isCorrect": false },
+                    { "text": "CARNE", "rationale": "La carne è una fonte di proteine.", "isCorrect": false }
+                ],
+                "hint": "Cerca l'altro alimento colorato che si trova nella fascia Verde."
+            },
+            {
+                "questionNumber": 10,
+                "question": "Qual è il plurale di 'FORMAGGIO'?",
+                "answerOptions": [
+                    { "text": "Formaggie", "rationale": "La desinenza '-ie' non è corretta per questo plurale maschile.", "isCorrect": false },
+                    { "text": "Formaggi", "rationale": "Le parole maschili che finiscono in '-io' (con la 'i' non accentata) al plurale perdono la 'o' e finiscono in '-i'.", "isCorrect": true },
+                    { "text": "Formaggio", "rationale": "Questa parola non è invariabile, cambia al plurale.", "isCorrect": false },
+                    { "text": "Formaggia", "rationale": "Questa forma non è corretta per il plurale di 'formaggio'.", "isCorrect": false }
+                ],
+                "hint": "È una parola maschile che finisce in -IO. Come si forma il plurale?"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answers = new Array(questions.length).fill(null); // Memorizza le risposte date
+        let quizCompleted = false;
+
+        const questionArea = document.getElementById('question-area');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        const quizResultsDiv = document.getElementById('quiz-results');
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                displayResults();
+                return;
+            }
+
+            if (quizCompleted) {
+                displayResults(); // Se il quiz è completo, mostra i risultati
+                return;
+            }
+
+            const q = questions[currentQuestionIndex];
+            questionArea.innerHTML = `
+                <div class="question-box">
+                    <div class="question-number">Domanda ${q.questionNumber} di ${questions.length}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-container" id="options-${currentQuestionIndex}">
+                        ${q.answerOptions.map((option, index) => `
+                            <button class="option-button" data-index="${index}" onclick="selectOption(${index})">${option.text}</button>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedback-${currentQuestionIndex}"></div>
+                    <div class="rationale" id="rationale-${currentQuestionIndex}" style="display:none;"></div>
+                </div>
+            `;
+
+            // Aggiorna lo stato dei pulsanti di navigazione
+            prevButton.disabled = currentQuestionIndex === 0;
+            if (currentQuestionIndex === questions.length - 1) {
+                nextButton.textContent = "Mostra Risultati";
+            } else {
+                nextButton.textContent = "Successiva";
+            }
+
+            // Se la domanda era già stata risposta, ripristina lo stato
+            if (answers[currentQuestionIndex] !== null) {
+                const selectedOptionIndex = answers[currentQuestionIndex];
+                const selectedButton = document.querySelector(`#options-${currentQuestionIndex} .option-button[data-index="${selectedOptionIndex}"]`);
+                checkAnswer(selectedOptionIndex, selectedButton, true); // true = non aggiornare il punteggio
+            }
+        }
+
+        function selectOption(selectedIndex) {
+            // Disabilita tutti i bottoni per impedire risposte multiple
+            const optionButtons = document.querySelectorAll(`#options-${currentQuestionIndex} .option-button`);
+            optionButtons.forEach(button => button.disabled = true);
+
+            answers[currentQuestionIndex] = selectedIndex; // Salva la risposta
+
+            const selectedButton = document.querySelector(`#options-${currentQuestionIndex} .option-button[data-index="${selectedIndex}"]`);
+            checkAnswer(selectedIndex, selectedButton, false); // false = aggiorna il punteggio
+        }
+
+        function checkAnswer(selectedIndex, selectedButton, isReview) {
+            const q = questions[currentQuestionIndex];
+            const feedbackDiv = document.getElementById(`feedback-${currentQuestionIndex}`);
+            const rationaleDiv = document.getElementById(`rationale-${currentQuestionIndex}`);
+
+            // Rimuovi classi precedenti
+            selectedButton.classList.remove('correct', 'incorrect');
+            
+            // Applica classi per il feedback visivo
+            if (q.answerOptions[selectedIndex].isCorrect) {
+                selectedButton.classList.add('correct');
+                feedbackDiv.className = 'feedback correct';
+                feedbackDiv.textContent = 'Corretto!';
+                if (!isReview) score++; // Solo aggiorna il punteggio se non è una revisione
+            } else {
+                selectedButton.classList.add('incorrect');
+                feedbackDiv.className = 'feedback incorrect';
+                feedbackDiv.textContent = 'Sbagliato.';
+                // Trova e evidenzia la risposta corretta
+                const correctOptionIndex = q.answerOptions.findIndex(opt => opt.isCorrect);
+                const correctButton = document.querySelector(`#options-${currentQuestionIndex} .option-button[data-index="${correctOptionIndex}"]`);
+                if (correctButton) {
+                    correctButton.classList.add('correct');
+                }
+            }
+            
+            // Mostra il rationale
+            rationaleDiv.textContent = q.answerOptions[selectedIndex].rationale;
+            rationaleDiv.style.display = 'block';
+
+            // Disabilita tutti i bottoni per questa domanda dopo la risposta
+            const optionButtons = document.querySelectorAll(`#options-${currentQuestionIndex} .option-button`);
+            optionButtons.forEach(button => button.disabled = true);
+        }
+
+        function showNextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else if (currentQuestionIndex === questions.length - 1) {
+                quizCompleted = true; // Marca il quiz come completato
+                displayResults();
+            }
+        }
+
+        function showPreviousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+                quizResultsDiv.style.display = 'none'; // Nascondi risultati se si torna indietro
+                questionArea.style.display = 'block';
+                document.querySelector('.navigation-buttons').style.display = 'flex';
+            }
+        }
+
+        function displayResults() {
+            questionArea.style.display = 'none';
+            document.querySelector('.navigation-buttons').style.display = 'none';
+            quizResultsDiv.style.display = 'block';
+            quizResultsDiv.innerHTML = `Hai completato il quiz!<br>Il tuo punteggio è: ${score} su ${questions.length}`;
+            quizResultsDiv.style.color = (score === questions.length) ? '#28a745' : '#dc3545';
+        }
+
+        // Carica la prima domanda all'avvio
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+    </script>
+
+</body>
+</html>
