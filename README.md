@@ -68,6 +68,16 @@ Queste pagine offrono esercizi focalizzati sul rapporto tra alimenti e nutrienti
 
 **File: [banana.html](https://anna1704.github.io/matematica/banana.html)**
 
+**File: [cruciverba.html](https://anna1704.github.io/matematica/cruciverba.html)**
+
+**File: [nutrienti.html](https://anna1704.github.io/matematica/nutrienti.html)**
+
+**File: [nutrienti.html](https://anna1704.github.io/matematica/nutrienti.html)**
+
+**File: [orologiopasti.html](https://anna1704.github.io/matematica/orologiopasti.html)**
+
+**File: [orologiopasti.html](https://anna1704.github.io/matematica/orologiopasti.html)**
+
 ## 🚀 Tecnologie Utilizzate
 
 Tutti gli strumenti interattivi in questo repository sono costruiti con tecnologie web standard (HTML, CSS, JavaScript) per garantire massima accessibilità e facilità di utilizzo su qualsiasi browser moderno.
