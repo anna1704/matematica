@@ -1,12 +1,13 @@
 # 📚 Suite Didattica Interattiva per la Scuola Primaria (Classe Terza)
 
-Benvenuti nel repository che contiene una serie di strumenti web interattivi progettati per consolidare e rafforzare le **abilità matematiche fondamentali** che gli alunni della terza classe della Scuola Primaria devono acquisire.
+Benvenuti nel repository che contiene una serie di strumenti web interattivi progettati per consolidare e rafforzare le **abilità matematico-scientifiche fondamentali** che gli alunni della terza classe della Scuola Primaria devono acquisire.
 
-Il progetto si concentra su tre aree didattiche chiave: il **calcolo mentale**, la **comprensione del valore posizionale** e la **risoluzione di problemi contestualizzati**.
+Il progetto si concentra, per la matematica, su tre aree didattiche chiave: il **calcolo mentale**, la **comprensione del valore posizionale** e la **risoluzione di problemi contestualizzati**.
+Per quanto riguarda le scienze naturali, il progetto si articola sui seguenti nuclei fondanti: l'**alimentazione**, la **materia**.
 
 ---
 
-## 🎯 Indice degli Strumenti Interattivi
+## 🎯 Indice degli Strumenti Interattivi - Matematica
 
 | N. | Strumento | File di Riferimento | Focus Didattico |
 | :---: | :--- | :--- | :--- |
@@ -17,7 +18,7 @@ Il progetto si concentra su tre aree didattiche chiave: il **calcolo mentale**, 
 
 ---
 
-## 📝 Dettaglio e Istruzioni d'Uso
+## 📝 Dettaglio e Istruzioni d'Uso - Matematica
 
 ### 1. Risoluzione Problemi Contestualizzati
 
@@ -58,6 +59,14 @@ Questa pagina allena la velocità e precisione nella scomposizione per numeri a 
 * **Istruzioni:** Ti vengono mostrati dei numeri scritti in cifre e devi abbinarli alle parole; ti vengono mostrati dei numeri e devi riordinarli dal minore al maggiore trascinandoli nelle caselle vuote.
 
 ---
+
+## 📝 Dettaglio e Istruzioni d'Uso - Scienze
+
+### 1. Il cibo, amico della salute e del nostro Pianeta
+
+Queste pagine offrono esercizi focalizzati sul rapporto tra alimenti e nutrienti, sull'importanza di assumere i nutrienti essenziali per la crescita e per la salute, ma anche per introdurre i principi dell'alimentazione sostenibile.
+
+**File: [banana.html](https://anna1704.github.io/matematica/banana.html)**
 
 ## 🚀 Tecnologie Utilizzate
 
