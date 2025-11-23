@@ -76,7 +76,13 @@ Queste pagine offrono esercizi focalizzati sul rapporto tra alimenti e nutrienti
 
 **File: [orologiopasti.html](https://anna1704.github.io/matematica/orologiopasti.html)**
 
-**File: [orologiopasti.html](https://anna1704.github.io/matematica/orologiopasti.html)**
+**File: [piramidealimentare3.html](https://anna1704.github.io/matematica/piramidealimentare3.html)**
+
+**File: [quiz.html](https://anna1704.github.io/matematica/quiz.html)**
+
+**File: [storia.html](https://anna1704.github.io/matematica/storia.html)**
+
+**File: [supereroi.html](https://anna1704.github.io/matematica/supereroi.html)**
 
 ## 🚀 Tecnologie Utilizzate
 
