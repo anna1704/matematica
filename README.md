@@ -88,6 +88,11 @@ Queste pagine offrono esercizi focalizzati sul rapporto tra alimenti e nutrienti
 
 **File: [supereroi.html](https://anna1704.github.io/matematica/supereroi.html)**
 
+
+### 2. La materia e i suoi stati
+
+**File: [statimateria.html](https://anna1704.github.io/matematica/statimateria.html)**
+
 ## 🚀 Tecnologie Utilizzate
 
 Tutti gli strumenti interattivi in questo repository sono costruiti con tecnologie web standard (HTML, CSS, JavaScript) per garantire massima accessibilità e facilità di utilizzo su qualsiasi browser moderno.
