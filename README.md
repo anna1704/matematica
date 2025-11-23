@@ -60,7 +60,7 @@ Questa pagina allena la velocità e precisione nella scomposizione per numeri a 
 
 ---
 
-## 📝 Dettaglio e Istruzioni d'Uso - Scienze
+## 🔬 Dettaglio e Istruzioni d'Uso - Scienze
 
 ### 1. Il cibo, amico della salute e del nostro Pianeta
 
