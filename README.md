@@ -62,7 +62,7 @@ Questa pagina allena la velocità e precisione nella scomposizione per numeri a 
 
 ## 🔬 Dettaglio e Istruzioni d'Uso - Scienze
 
-### 1. Il cibo, amico della salute e del nostro Pianeta
+### 1. Il cibo, amico della salute e del nostro Pianeta 👨‍🍳
 
 Progetto multidisciplinare (Italiano, Matematica, Scienze, Storia, Arte, Tecnologia) realizzato nel corso del 1° quadrimestre.
 
@@ -88,8 +88,9 @@ Queste pagine offrono esercizi focalizzati sul rapporto tra alimenti e nutrienti
 
 **File: [supereroi.html](https://anna1704.github.io/matematica/supereroi.html)**
 
+---
 
-### 2. La materia e i suoi stati
+### 2. La materia e i suoi stati 🧪
 
 **File: [statimateria.html](https://anna1704.github.io/matematica/statimateria.html)**
 
