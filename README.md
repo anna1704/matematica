@@ -64,6 +64,10 @@ Questa pagina allena la velocità e precisione nella scomposizione per numeri a 
 
 ### 1. Il cibo, amico della salute e del nostro Pianeta
 
+Progetto multidisciplinare (Italiano, Matematica, Scienze, Storia, Arte, Tecnologia) realizzato nel corso del 1° quadrimestre.
+
+**File: [banana.html](https://anna1704.github.io/matematica/banana.html)**
+
 Queste pagine offrono esercizi focalizzati sul rapporto tra alimenti e nutrienti, sull'importanza di assumere i nutrienti essenziali per la crescita e per la salute, ma anche per introdurre i principi dell'alimentazione sostenibile.
 
 **File: [banana.html](https://anna1704.github.io/matematica/banana.html)**
