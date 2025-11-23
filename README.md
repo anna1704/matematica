@@ -66,7 +66,7 @@ Questa pagina allena la velocità e precisione nella scomposizione per numeri a 
 
 Progetto multidisciplinare (Italiano, Matematica, Scienze, Storia, Arte, Tecnologia) realizzato nel corso del 1° quadrimestre.
 
-**File: [cibosalutepianeta.pdf](https://anna1704.github.io/matematica/cibosalutepianeta.html)**
+**File: [cibosalutepianeta.pdf](https://anna1704.github.io/matematica/cibosalutepianeta.pdf)**
 
 Queste pagine offrono esercizi focalizzati sul rapporto tra alimenti e nutrienti, sull'importanza di assumere i nutrienti essenziali per la crescita e per la salute, ma anche per introdurre i principi dell'alimentazione sostenibile.
 
