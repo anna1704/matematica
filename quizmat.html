@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interattivo di Matematica - Classe Terza</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h1 { color: #2c3e50; text-align: center; }
+        h2 { color: #2980b9; border-bottom: 2px solid #2980b9; padding-bottom: 5px; }
+        .question { margin-bottom: 15px; font-weight: bold; }
+        input[type="text"], input[type="number"], select { padding: 8px; width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; margin-top: 5px; }
+        button { background-color: #27ae60; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; }
+        button:hover { background-color: #219150; }
+        .feedback { margin-top: 10px; padding: 10px; border-radius: 4px; display: none; }
+        .correct { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .incorrect { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #ecf0f1; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+    <h1>Prova Finale di Matematica</h1>
+
+    <div class="card">
+        <h2>1. Operazioni</h2>
+        <div class="question">456 + 287 = <input type="number" id="q1" placeholder="Risultato"></div>
+        <div class="question">800 - 563 = <input type="number" id="q2" placeholder="Risultato"></div>
+        <div class="question">124 x 16 = <input type="number" id="q3" placeholder="Risultato"></div>
+        <div class="question">96 : 4 = <input type="number" id="q4" placeholder="Risultato"></div>
+    </div>
+
+    <div class="card">
+        <h2>2. Gli Angoli</h2>
+        <p>Scegli il nome corretto per ogni descrizione:</p>
+        <div class="question">
+            Angolo minore di 90°: 
+            <select id="q5">
+                <option value="">-- Seleziona --</option>
+                <option value="ACUTO">ACUTO</option>
+                <option value="RETTO">RETTO</option>
+                <option value="OTTUSO">OTTUSO</option>
+            </select>
+        </div>
+        <div class="question">
+            Angolo di 90° (forma una L): 
+            <select id="q6">
+                <option value="">-- Seleziona --</option>
+                <option value="RETTO">RETTO</option>
+                <option value="PIATTO">PIATTO</option>
+                <option value="GIRO">GIRO</option>
+            </select>
+        </div>
+        <div class="question">
+            Angolo maggiore di 90° e minore di 180°: 
+            <select id="q7">
+                <option value="">-- Seleziona --</option>
+                <option value="OTTUSO">OTTUSO</option>
+                <option value="ACUTO">ACUTO</option>
+                <option value="PIATTO">PIATTO</option>
+            </select>
+        </div>
+        <div class="question">
+            Angolo di 180° (una linea retta): 
+            <select id="q8">
+                <option value="">-- Seleziona --</option>
+                <option value="PIATTO">PIATTO</option>
+                <option value="GIRO">GIRO</option>
+                <option value="RETTO">RETTO</option>
+            </select>
+        </div>
+        <div class="question">
+            Angolo di 360° (un cerchio completo): 
+            <select id="q9">
+                <option value="">-- Seleziona --</option>
+                <option value="GIRO">GIRO</option>
+                <option value="PIATTO">PIATTO</option>
+                <option value="ACUTO">ACUTO</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>3. Problema</h2>
+        <p>La maestra ha 85 caramelle e 7 sacchetti.</p>
+        <div class="question">Quante caramelle in ogni sacchetto? <input type="number" id="q10"></div>
+        <div class="question">Quante ne avanzano? <input type="number" id="q11"></div>
+    </div>
+
+    <div class="card">
+        <h2>4. Classificazione Animali</h2>
+        <p>Completa la tabella selezionando la categoria corretta:</p>
+        <table>
+            <tr>
+                <th>Caratteristica</th>
+                <th>Categoria</th>
+            </tr>
+            <tr>
+                <td>Depongono le uova e hanno la pelle dura</td>
+                <td>
+                    <select id="cat1">
+                        <option value="">-- Scegli --</option>
+                        <option value="Rettili">Rettili</option>
+                        <option value="Mammiferi">Mammiferi</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Allattano i loro piccoli</td>
+                <td>
+                    <select id="cat2">
+                        <option value="">-- Scegli --</option>
+                        <option value="Mammiferi">Mammiferi</option>
+                        <option value="Pesci">Pesci</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Corpo ricoperto di squame, vivono in acqua</td>
+                <td>
+                    <select id="cat3">
+                        <option value="">-- Scegli --</option>
+                        <option value="Pesci">Pesci</option>
+                        <option value="Anfibi">Anfibi</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Vivono sia in acqua che sulla terraferma</td>
+                <td>
+                    <select id="cat4">
+                        <option value="">-- Scegli --</option>
+                        <option value="Anfibi">Anfibi</option>
+                        <option value="Uccelli">Uccelli</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Hanno piume, becco e ali</td>
+                <td>
+                    <select id="cat5">
+                        <option value="">-- Scegli --</option>
+                        <option value="Uccelli">Uccelli</option>
+                        <option value="Rettili">Rettili</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <button onclick="checkAnswers()">Verifica Risposte</button>
+    <div id="feedback" class="feedback"></div>
+
+    <script>
+        function checkAnswers() {
+            let score = 0;
+            const feedback = document.getElementById('feedback');
+            
+            if(document.getElementById('q1').value == 743) score++;
+            if(document.getElementById('q2').value == 237) score++;
+            if(document.getElementById('q3').value == 1984) score++;
+            if(document.getElementById('q4').value == 24) score++;
+            if(document.getElementById('q5').value == "ACUTO") score++;
+            if(document.getElementById('q6').value == "RETTO") score++;
+            if(document.getElementById('q7').value == "OTTUSO") score++;
+            if(document.getElementById('q8').value == "PIATTO") score++;
+            if(document.getElementById('q9').value == "GIRO") score++;
+            if(document.getElementById('q10').value == 12) score++;
+            if(document.getElementById('q11').value == 1) score++;
+            if(document.getElementById('cat1').value == "Rettili") score++;
+            if(document.getElementById('cat2').value == "Mammiferi") score++;
+            if(document.getElementById('cat3').value == "Pesci") score++;
+            if(document.getElementById('cat4').value == "Anfibi") score++;
+            if(document.getElementById('cat5').value == "Uccelli") score++;
+
+            feedback.style.display = "block";
+            if(score === 16) {
+                feedback.className = "feedback correct";
+                feedback.innerHTML = "Eccellente! Hai risposto correttamente a tutte le domande (16/16).";
+            } else {
+                feedback.className = "feedback incorrect";
+                feedback.innerHTML = "Hai totalizzato " + score + " su 16. Controlla le risposte sbagliate e riprova!";
+            }
+        }
+    </script>
+</body>
+</html>
