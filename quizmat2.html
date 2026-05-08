@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz di Matematica - Versione 2</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f39c12;
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+            --bg-color: #f8f9fa;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-left: 5px solid var(--primary-color);
+            background: #fcfcfc;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #219150;
+        }
+
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .correct { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .wrong { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            th, td { padding: 8px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Nuova Prova di Matematica</h1>
+
+    <!-- 1. Operazioni -->
+    <div class="section">
+        <h2>1. Operazioni in colonna</h2>
+        <div class="question">
+            <label for="add">538 + 374 =</label>
+            <input type="number" id="add" placeholder="Risultato">
+        </div>
+        <div class="question">
+            <label for="sub">705 - 428 =</label>
+            <input type="number" id="sub" placeholder="Risultato">
+        </div>
+        <div class="question">
+            <label for="mul">213 x 14 =</label>
+            <input type="number" id="mul" placeholder="Risultato">
+        </div>
+        <div class="question">
+            <label for="div">78 : 3 =</label>
+            <input type="number" id="div" placeholder="Risultato">
+        </div>
+    </div>
+
+    <!-- 2. Angoli -->
+    <div class="section">
+        <h2>2. Gli angoli</h2>
+        <div class="question">
+            <label>Un angolo tra 90° e 180° si chiama:</label>
+            <select id="angle">
+                <option value="">-- Scegli --</option>
+                <option value="retto">Retto</option>
+                <option value="acuto">Acuto</option>
+                <option value="ottuso">Ottuso</option>
+                <option value="piatto">Piatto</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 3. Geometria -->
+    <div class="section">
+        <h2>3. Geometria</h2>
+        <div class="question">
+            <label for="square">Perimetro di un quadrato con lato 6 cm (cm):</label>
+            <input type="number" id="square">
+        </div>
+        <div class="question">
+            <label for="rect">Perimetro di un rettangolo (base 7 cm, altezza 4 cm):</label>
+            <input type="number" id="rect">
+        </div>
+    </div>
+
+    <!-- 4. Problema -->
+    <div class="section">
+        <h2>4. Problema</h2>
+        <p>Un pasticciere ha 94 biscotti e 8 scatole.</p>
+        <div class="question">
+            <label for="prob_q">Biscotti per scatola:</label>
+            <input type="number" id="prob_q">
+        </div>
+        <div class="question">
+            <label for="prob_r">Biscotti che avanzano (resto):</label>
+            <input type="number" id="prob_r">
+        </div>
+    </div>
+
+    <!-- 5. Scienze -->
+    <div class="section">
+        <h2>5. Classificazione Animali</h2>
+        <div class="question">
+            <label>Quale categoria di animali allatta i piccoli?</label>
+            <select id="science">
+                <option value="">-- Scegli --</option>
+                <option value="pesci">Pesci</option>
+                <option value="mammiferi">Mammiferi</option>
+                <option value="rettili">Rettili</option>
+                <option value="uccelli">Uccelli</option>
+            </select>
+        </div>
+    </div>
+
+    <button onclick="validaQuiz()">Verifica Risposte</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function validaQuiz() {
+        let punti = 0;
+        const risposte = {
+            add: 912,
+            sub: 277,
+            mul: 2982,
+            div: 26,
+            angle: "ottuso",
+            square: 24,
+            rect: 22,
+            prob_q: 11,
+            prob_r: 6,
+            science: "mammiferi"
+        };
+
+        if(parseInt(document.getElementById('add').value) === risposte.add) punti++;
+        if(parseInt(document.getElementById('sub').value) === risposte.sub) punti++;
+        if(parseInt(document.getElementById('mul').value) === risposte.mul) punti++;
+        if(parseInt(document.getElementById('div').value) === risposte.div) punti++;
+        if(document.getElementById('angle').value === risposte.angle) punti++;
+        if(parseInt(document.getElementById('square').value) === risposte.square) punti++;
+        if(parseInt(document.getElementById('rect').value) === risposte.rect) punti++;
+        if(parseInt(document.getElementById('prob_q').value) === risposte.prob_q) punti++;
+        if(parseInt(document.getElementById('prob_r').value) === risposte.prob_r) punti++;
+        if(document.getElementById('science').value === risposte.science) punti++;
+
+        const resDiv = document.getElementById('result');
+        resDiv.style.display = "block";
+        
+        if(punti === 10) {
+            resDiv.className = "correct";
+            resDiv.innerHTML = "Eccellente! 10/10 risposte esatte.";
+        } else {
+            resDiv.className = "wrong";
+            resDiv.innerHTML = "Hai totalizzato " + punti + " su 10. Controlla e riprova!";
+        }
+        
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+</script>
+
+</body>
+</html>
