@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz di Matematica e Scienze - Classe Terza</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+            --bg-color: #ecf0f1;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 { text-align: center; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; }
+        h2 { color: #2980b9; margin-top: 30px; font-size: 1.3rem; background: #e8f4fd; padding: 10px; border-radius: 5px; }
+
+        .question-block { margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 8px; }
+        .question-text { font-weight: bold; margin-bottom: 10px; display: block; }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        button:hover { background-color: #27ae60; transform: scale(1.01); }
+
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .correct-box { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .wrong-box { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            th, td { padding: 8px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Prova Finale di Matematica e Scienze</h1>
+
+    <!-- 1. Operazioni -->
+    <section>
+        <h2>1. Operazioni in colonna</h2>
+        <div class="question-block">
+            <span class="question-text">538 + 374 =</span>
+            <input type="number" id="q1" placeholder="Risultato">
+        </div>
+        <div class="question-block">
+            <span class="question-text">705 - 428 =</span>
+            <input type="number" id="q2" placeholder="Risultato">
+        </div>
+        <div class="question-block">
+            <span class="question-text">213 x 14 =</span>
+            <input type="number" id="q3" placeholder="Risultato">
+        </div>
+        <div class="question-block">
+            <span class="question-text">78 : 3 =</span>
+            <input type="number" id="q4" placeholder="Risultato">
+        </div>
+    </section>
+
+    <!-- 2. Angoli (COMPLETO) -->
+    <section>
+        <h2>2. Gli Angoli</h2>
+        <p>Associa ogni descrizione al nome corretto dell'angolo:</p>
+        <table>
+            <tr>
+                <th>Descrizione dell'ampiezza</th>
+                <th>Nome dell'angolo</th>
+            </tr>
+            <tr>
+                <td>Minore di 90° (stretto)</td>
+                <td>
+                    <select id="a1">
+                        <option value="">-- Scegli --</option>
+                        <option value="acuto">Acuto</option>
+                        <option value="retto">Retto</option>
+                        <option value="ottuso">Ottuso</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Esattamente 90° (a forma di L)</td>
+                <td>
+                    <select id="a2">
+                        <option value="">-- Scegli --</option>
+                        <option value="piatto">Piatto</option>
+                        <option value="retto">Retto</option>
+                        <option value="giro">Giro</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Maggiore di 90° e minore di 180°</td>
+                <td>
+                    <select id="a3">
+                        <option value="">-- Scegli --</option>
+                        <option value="acuto">Acuto</option>
+                        <option value="ottuso">Ottuso</option>
+                        <option value="piatto">Piatto</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Esattamente 180° (una linea dritta)</td>
+                <td>
+                    <select id="a4">
+                        <option value="">-- Scegli --</option>
+                        <option value="piatto">Piatto</option>
+                        <option value="retto">Retto</option>
+                        <option value="giro">Giro</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Esattamente 360° (un cerchio completo)</td>
+                <td>
+                    <select id="a5">
+                        <option value="">-- Scegli --</option>
+                        <option value="nullo">Nullo</option>
+                        <option value="piatto">Piatto</option>
+                        <option value="giro">Giro</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Esattamente 0° (i lati sono sovrapposti)</td>
+                <td>
+                    <select id="a6">
+                        <option value="">-- Scegli --</option>
+                        <option value="nullo">Nullo</option>
+                        <option value="giro">Giro</option>
+                        <option value="acuto">Acuto</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- 3. Geometria -->
+    <section>
+        <h2>3. Geometria</h2>
+        <div class="question-block">
+            <span class="question-text">Calcola il perimetro di un quadrato con lato 6 cm:</span>
+            <input type="number" id="g1" placeholder="Risultato in cm">
+        </div>
+        <div class="question-block">
+            <span class="question-text">Calcola il perimetro di un rettangolo (base 7 cm, altezza 4 cm):</span>
+            <input type="number" id="g2" placeholder="Risultato in cm">
+        </div>
+    </section>
+
+    <!-- 4. Problema -->
+    <section>
+        <h2>4. Il Problema del Pasticciere</h2>
+        <p>Un pasticciere ha 94 biscotti e 8 scatole.</p>
+        <div class="question-block">
+            <span class="question-text">Biscotti in ogni scatola:</span>
+            <input type="number" id="p1">
+        </div>
+        <div class="question-block">
+            <span class="question-text">Biscotti che avanzano (resto):</span>
+            <input type="number" id="p2">
+        </div>
+    </section>
+
+    <!-- 5. Scienze (COMPLETO) -->
+    <section>
+        <h2>5. Classificazione degli Animali</h2>
+        <p>Scegli la classe corretta per ogni caratteristica:</p>
+        <table>
+            <tr>
+                <th>Caratteristiche principali</th>
+                <th>Classe animale</th>
+            </tr>
+            <tr>
+                <td>Allattano i piccoli e hanno il pelo</td>
+                <td>
+                    <select id="s1">
+                        <option value="">-- Scegli --</option>
+                        <option value="mammiferi">Mammiferi</option>
+                        <option value="uccelli">Uccelli</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Hanno piume, ali e nascono dalle uova</td>
+                <td>
+                    <select id="s2">
+                        <option value="">-- Scegli --</option>
+                        <option value="rettili">Rettili</option>
+                        <option value="uccelli">Uccelli</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Pelle nuda e umida, vivono tra acqua e terra</td>
+                <td>
+                    <select id="s3">
+                        <option value="">-- Scegli --</option>
+                        <option value="anfibi">Anfibi</option>
+                        <option value="pesci">Pesci</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Corpo coperto di scaglie, respirano con le branchie</td>
+                <td>
+                    <select id="s4">
+                        <option value="">-- Scegli --</option>
+                        <option value="pesci">Pesci</option>
+                        <option value="rettili">Rettili</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Pelle coperta di squame dure, strisciano o hanno zampe corte</td>
+                <td>
+                    <select id="s5">
+                        <option value="">-- Scegli --</option>
+                        <option value="anfibi">Anfibi</option>
+                        <option value="rettili">Rettili</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <button onclick="calcolaRisultato()">Verifica il mio Quiz</button>
+    <div id="result"></div>
+</div>
+
+<script>
+    function calcolaRisultato() {
+        let punteggio = 0;
+        const totale = 19;
+
+        // Risposte Corrette
+        if(document.getElementById('q1').value == 912) punteggio++;
+        if(document.getElementById('q2').value == 277) punteggio++;
+        if(document.getElementById('q3').value == 2982) punteggio++;
+        if(document.getElementById('q4').value == 26) punteggio++;
+        
+        if(document.getElementById('a1').value == "acuto") punteggio++;
+        if(document.getElementById('a2').value == "retto") punteggio++;
+        if(document.getElementById('a3').value == "ottuso") punteggio++;
+        if(document.getElementById('a4').value == "piatto") punteggio++;
+        if(document.getElementById('a5').value == "giro") punteggio++;
+        if(document.getElementById('a6').value == "nullo") punteggio++;
+
+        if(document.getElementById('g1').value == 24) punteggio++;
+        if(document.getElementById('g2').value == 22) punteggio++;
+
+        if(document.getElementById('p1').value == 11) punteggio++;
+        if(document.getElementById('p2').value == 6) punteggio++;
+
+        if(document.getElementById('s1').value == "mammiferi") punteggio++;
+        if(document.getElementById('s2').value == "uccelli") punteggio++;
+        if(document.getElementById('s3').value == "anfibi") punteggio++;
+        if(document.getElementById('s4').value == "pesci") punteggio++;
+        if(document.getElementById('s5').value == "rettili") punteggio++;
+
+        const resDiv = document.getElementById('result');
+        resDiv.style.display = "block";
+        
+        if(punteggio === totale) {
+            resDiv.className = "correct-box";
+            resDiv.innerHTML = "Bravissimo! Hai fatto punteggio pieno: " + punteggio + "/" + totale;
+        } else {
+            resDiv.className = "wrong-box";
+            resDiv.innerHTML = "Hai totalizzato " + punteggio + " su " + totale + ". Rileggi bene le domande e riprova!";
+        }
+        
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
